@@ -1,0 +1,57 @@
+doctype html
+html(lang="ja")
+  head
+    meta(charset="utf-8")
+    meta(name="viewport" content="width=device-width")
+    
+    include partials/_meta
+    
+    title= share_title
+    meta(name="description" content=meta_description)
+    meta(name="keywords" content=meta_keywords)
+    
+    //- meta(property="og:locale" content="ja_JP")
+    //- meta(property="og:type" content="website")
+    //- meta(property="og:url" content=share_url)
+    //- meta(property="og:title" content=share_title)
+    //- meta(property="og:site_name" content=share_siteName)
+    //- meta(property="og:description" content=og_description)
+    //- meta(property="og:image" content=share_image)
+    
+    //- meta(name="twitter:card" content="summary_large_image")
+    //- meta(name="twitter:title" content=share_title)
+    //- meta(name="twitter:description" content=tw_description)
+    //- meta(name="twitter:image" content=share_image)
+    //- meta(name="twitter:site" content="@hoge")
+    //- meta(name="twitter:creator" content="@hoge")
+    
+    link(rel="shortcut icon" type="image/vnd.microsoft.icon" href="./favicon.ico")
+    link(rel="icon" type="image/vnd.microsoft.icon" href="./favicon.ico")
+    link(rel="apple-touch-icon" href="./favicon.ico")
+    
+    link(rel="stylesheet" href="./css/main.css")
+    link(rel="stylesheet" href="./css/sp/main.css")
+    
+    script(src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js")
+    script(src="./js/lib/jquery.easing.1.3.js")
+    script(src="./js/lib/jquery.transform2d.js")
+    
+    script(src="./js/App.js")
+    script(src="./js/Util.js")
+    script(src="./js/main.js")
+    
+  body
+    script.
+      (function(win, doc, ns){
+        var ua = win.navigator.userAgent.toLowerCase();
+        ns.ua = {};
+        ns.ua.isSP = /ipod|iphone|ipad|android/i.test(ua);
+        ns.ua.isAndroid = /android/.test(ua);
+        ns.ua.isPC = !ns.ua.isSP;
+        ns.ua.isIE8 = /msie 8/.test(ua);
+        ns.ua.isIE9 = /msie 9/.test(ua);
+        if ( ns.ua.isSP ) doc.body.className += " isSP";
+      })(window, document, App);
+    
+    div.wrapper
+      h1 hoge
