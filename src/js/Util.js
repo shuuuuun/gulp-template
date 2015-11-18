@@ -1,9 +1,9 @@
-(function(win, doc, ns){
+(function(win, doc){
+  var ns = win.App = win.App || {};
   
   var $win = $(win);
   
   function Util(){
-    
     this.getWinSize();
   }
   
@@ -18,10 +18,10 @@
   Util.prototype.getWinSize = function(){
       ns.winW = Math.max( $win.width(), (win.innerWidth || 0) );
       ns.winH = Math.max( $win.height(), (win.innerHeight || 0) );
-      // ns.docW = $(doc).width();
-      // ns.docH = $(doc).height();
-      // ns.wraW = $(".wrapper").width();
-      // ns.wraH = $(".wrapper").height();
+  };
+  
+  Util.prototype.getRandomInt = function(min, max){
+    return Math.floor( Math.random() * (max - min + 1) ) + min;
   };
   
   Util.prototype.throttle = function(fn, interval){
@@ -57,7 +57,14 @@
       });
     })(0);
   };
+  Util.prototype.delay = function(time){ // asyncで使う用
+    return function(callback){ setTimeout(callback,time); };
+  };
+  
+  Util.prototype.zeroPadding = function(num, len){
+      return (new Array(len).join("0") + num).slice(-len);
+  };
   
   ns.Util = Util;
   
-})(this, document, App);
+})(this, document);
