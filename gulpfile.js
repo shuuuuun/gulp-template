@@ -11,6 +11,9 @@ var webserver = require('gulp-webserver');
 var uglify = require('gulp-uglify');
 var gutil = require('gulp-util');
 var rename = require('gulp-rename');
+var browserify = require('browserify');
+var source = require('vinyl-source-stream');
+var babelify = require('babelify');
 
 
 // $ gulp --develop でjsをminifyしないサーバー起動
@@ -88,4 +91,14 @@ gulp.task('compass', function(){
       sass: './src/scss/'
     }))
     .pipe(gulp.dest(DEST_PATH+'css/'));
+});
+
+gulp.task('script',function(){
+  browserify({
+    entries: ['./src/js/main.js']
+  })
+  .transform(babelify)
+  .bundle()
+  .pipe(source('scripts.js'))
+  .pipe(gulp.dest(DEST_PATH+'js/'));
 });
