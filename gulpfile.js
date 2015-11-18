@@ -1,5 +1,6 @@
 var DEST_PATH = './public/';
 var PORT = '2525';
+var FALLBACK = '404.html';
 
 var gulp = require('gulp');
 var plumber = require( 'gulp-plumber' );
@@ -9,6 +10,7 @@ var watch = require('gulp-watch');
 var webserver = require('gulp-webserver');
 var uglify = require('gulp-uglify');
 var gutil = require('gulp-util');
+var rename = require('gulp-rename');
 
 
 // $ gulp --develop でjsをminifyしないサーバー起動
@@ -42,6 +44,7 @@ gulp.task('server',function(){
       // directoryListing: true,
       host: '0.0.0.0',
       port: PORT,
+      fallback: FALLBACK,
     })
   );
 });
@@ -51,6 +54,12 @@ gulp.task('jade',function(){
     .pipe(plumber())
     .pipe(jade({
       pretty: true
+    }))
+    .pipe(rename(function(path){ // ex. hoge.jade -> hoge/index.html
+      if (path.basename != 'index') {
+        path.dirname += '/' + path.basename;
+        path.basename = 'index';
+      }
     }))
     .pipe(gulp.dest(DEST_PATH));
 });
