@@ -58,9 +58,13 @@ gulp.task('jade',function(){
     .pipe(jade({
       pretty: true
     }))
-    .pipe(rename(function(path){ // ex. hoge.jade -> hoge/index.html
-      if (path.basename != 'index') {
-        path.dirname += '/' + path.basename;
+    .pipe(rename(function(path){
+      if (!!path.basename.match(/^_/)) { // ex. _hoge.jade -> hoge.html
+        path.basename = path.basename.replace(/^_/, '');
+        return;
+      }
+      if (path.basename != 'index') { // ex. hoge.jade -> hoge/index.html
+        path.dirname += '/' + path.basename.replace(/__/, '/'); // ex. hoge__fuga -> hoge/fuga
         path.basename = 'index';
       }
     }))
