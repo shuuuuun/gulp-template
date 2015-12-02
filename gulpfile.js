@@ -13,6 +13,8 @@ var gutil = require('gulp-util');
 var rename = require('gulp-rename');
 var concat = require("gulp-concat");
 
+var concatconfig = require('./concatconfig.js');
+
 
 // $ gulp --develop でjsをminifyしないサーバー起動
 // $ gulp --port 0000 でport指定してサーバー起動
@@ -71,17 +73,17 @@ gulp.task('jade',function(){
 
 gulp.task('js-dev',function(){
   // minifyしない
-  gulp.src(['./src/js/*.js','./src/js/**/*.js','!src/js/**/_*.js'])
+  gulp.src(concatconfig.files)
     .pipe(plumber())
-    // .pipe(concat('concat.js')) // 要修正 concat順の管理
+    .pipe(concat(concatconfig.dest))
     .pipe(gulp.dest(DEST_PATH+'js/'));
 });
 
 gulp.task('js',function(){
   // minifyする
-  gulp.src(['./src/js/*.js','./src/js/**/*.js','!src/js/**/_*.js'])
+  gulp.src(concatconfig.files)
     .pipe(plumber())
-    // .pipe(concat('concat.js')) // 要修正 concat順の管理
+    .pipe(concat(concatconfig.dest))
     .pipe(uglify({preserveComments: 'some'}))
     .pipe(gulp.dest(DEST_PATH+'js/'));
 });
