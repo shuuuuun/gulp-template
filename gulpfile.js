@@ -11,9 +11,7 @@ var webserver = require('gulp-webserver');
 var uglify = require('gulp-uglify');
 var gutil = require('gulp-util');
 var rename = require('gulp-rename');
-var browserify = require('browserify');
-var source = require('vinyl-source-stream');
-var babelify = require('babelify');
+var concat = require("gulp-concat");
 
 
 // $ gulp --develop でjsをminifyしないサーバー起動
@@ -75,6 +73,7 @@ gulp.task('js-dev',function(){
   // minifyしない
   gulp.src(['./src/js/*.js','./src/js/**/*.js','!src/js/**/_*.js'])
     .pipe(plumber())
+    // .pipe(concat('concat.js')) // 要修正 concat順の管理
     .pipe(gulp.dest(DEST_PATH+'js/'));
 });
 
@@ -82,6 +81,7 @@ gulp.task('js',function(){
   // minifyする
   gulp.src(['./src/js/*.js','./src/js/**/*.js','!src/js/**/_*.js'])
     .pipe(plumber())
+    // .pipe(concat('concat.js')) // 要修正 concat順の管理
     .pipe(uglify({preserveComments: 'some'}))
     .pipe(gulp.dest(DEST_PATH+'js/'));
 });
@@ -95,14 +95,4 @@ gulp.task('compass', function(){
       sass: './src/scss/'
     }))
     .pipe(gulp.dest(DEST_PATH+'css/'));
-});
-
-gulp.task('script',function(){
-  browserify({
-    entries: ['./src/js/main.js']
-  })
-  .transform(babelify)
-  .bundle()
-  .pipe(source('scripts.js'))
-  .pipe(gulp.dest(DEST_PATH+'js/'));
 });
