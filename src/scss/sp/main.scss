@@ -24,7 +24,9 @@ body * {
 }
 
 // ------------------------------
-.wrapper {
-  font-size: 1.6rem;
-  min-width: 320px;
+.isSP {
+  .wrapper {
+    font-size: 1.6rem;
+    min-width: 320px;
+  }
 }
