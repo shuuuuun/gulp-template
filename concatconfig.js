@@ -4,5 +4,5 @@ module.exports = {
     'src/js/Util.js', 
     'src/js/main.js'
   ],
-  dest: 'concat.js'
+  dest: 'script.js'
 };
