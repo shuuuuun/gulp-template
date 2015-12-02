@@ -7,11 +7,13 @@
 $MAIN_FONT: YuGothic, "游ゴシック", "ヒラギノ角ゴPro W3", "Hiragino Kaku Gothic Pro", Meiryo, "メイリオ", Helvetica, Arial, sans-serif;
 
 // common ------------------------------
-.onlypc {
-  display: none;
-}
-.hidden {
-  display: none !important;
+.isSP {
+  .onlypc {
+    display: none;
+  }
+  .hidden {
+    display: none !important;
+  }
 }
 
 // ------------------------------
@@ -24,7 +26,9 @@ body * {
 }
 
 // ------------------------------
-.wrapper {
-  font-size: 1.6rem;
-  min-width: 320px;
+.isSP {
+  .wrapper {
+    font-size: 1.6rem;
+    min-width: 320px;
+  }
 }
