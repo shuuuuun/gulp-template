@@ -1,5 +1,6 @@
 var DEST_PATH = './public/';
 var PORT = '2525';
+var FALLBACK = '404.html';
 
 var gulp = require('gulp');
 var plumber = require( 'gulp-plumber' );
@@ -9,6 +10,8 @@ var watch = require('gulp-watch');
 var webserver = require('gulp-webserver');
 var uglify = require('gulp-uglify');
 var gutil = require('gulp-util');
+var rename = require('gulp-rename');
+var concat = require("gulp-concat");
 
 
 // $ gulp --develop でjsをminifyしないサーバー起動
@@ -42,6 +45,7 @@ gulp.task('server',function(){
       // directoryListing: true,
       host: '0.0.0.0',
       port: PORT,
+      fallback: FALLBACK,
     })
   );
 });
@@ -52,6 +56,16 @@ gulp.task('jade',function(){
     .pipe(jade({
       pretty: true
     }))
+    .pipe(rename(function(path){
+      if (!!path.basename.match(/^_/)) { // ex. _hoge.jade -> hoge.html
+        path.basename = path.basename.replace(/^_/, '');
+        return;
+      }
+      if (path.basename != 'index') { // ex. hoge.jade -> hoge/index.html
+        path.dirname += '/' + path.basename.replace(/__/, '/'); // ex. hoge__fuga -> hoge/fuga
+        path.basename = 'index';
+      }
+    }))
     .pipe(gulp.dest(DEST_PATH));
 });
 
@@ -59,6 +73,7 @@ gulp.task('js-dev',function(){
   // minifyしない
   gulp.src(['./src/js/*.js','./src/js/**/*.js','!src/js/**/_*.js'])
     .pipe(plumber())
+    // .pipe(concat('concat.js')) // 要修正 concat順の管理
     .pipe(gulp.dest(DEST_PATH+'js/'));
 });
 
@@ -66,6 +81,7 @@ gulp.task('js',function(){
   // minifyする
   gulp.src(['./src/js/*.js','./src/js/**/*.js','!src/js/**/_*.js'])
     .pipe(plumber())
+    // .pipe(concat('concat.js')) // 要修正 concat順の管理
     .pipe(uglify({preserveComments: 'some'}))
     .pipe(gulp.dest(DEST_PATH+'js/'));
 });

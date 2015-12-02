@@ -1,8 +1,9 @@
-(function(win, doc, ns){
+(function(win, doc){
+  var ns = win.App = win.App || {};
   
   var $win = $(win);
   var util = new ns.Util();
-  util.bindOnResize();
+  // util.bindOnResize();
   
   $(function(){
     
@@ -21,4 +22,4 @@
   win.dev = {
   };
   
-})(this, document, App);
+})(this, document);
