@@ -12,6 +12,7 @@ var uglify = require('gulp-uglify');
 var gutil = require('gulp-util');
 var rename = require('gulp-rename');
 var concat = require("gulp-concat");
+var minifyCss = require("gulp-minify-css");
 
 var concatconfig = require('./concatconfig.js');
 
@@ -21,7 +22,7 @@ var concatconfig = require('./concatconfig.js');
 
 
 // default task
-if (gutil.env.develop) gulp.task('default',['watch', 'server', 'jade', 'js-dev', 'compass']);
+if (gutil.env.develop) gulp.task('default',['watch', 'server', 'jade', 'js-dev', 'compass-dev']);
 else gulp.task('default',['watch', 'server', 'jade', 'js', 'compass']);
 
 if (gutil.env.port) PORT = gutil.env.port;
@@ -88,7 +89,11 @@ gulp.task('js',function(){
     .pipe(gulp.dest(DEST_PATH+'js/'));
 });
 
-gulp.task('compass', function(){
+gulp.task('css-dev', ['compass-dev']);
+gulp.task('css', ['compass']);
+
+gulp.task('compass-dev',function(){
+  // minifyしない
   gulp.src(['./src/scss/*.scss','./src/scss/**/*.scss','!src/scss/**/_*.scss'])
     .pipe(plumber())
     .pipe(compass({
@@ -96,5 +101,17 @@ gulp.task('compass', function(){
       css: DEST_PATH+'css/',
       sass: './src/scss/'
     }))
+    .pipe(gulp.dest(DEST_PATH+'css/'));
+});
+
+gulp.task('compass',function(){
+  gulp.src(['./src/scss/*.scss','./src/scss/**/*.scss','!src/scss/**/_*.scss'])
+    .pipe(plumber())
+    .pipe(compass({
+      config_file: './config.rb',
+      css: DEST_PATH+'css/',
+      sass: './src/scss/'
+    }))
+    .pipe(minifyCss({compatibility: 'ie8'}))
     .pipe(gulp.dest(DEST_PATH+'css/'));
 });
