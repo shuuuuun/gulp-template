@@ -1,7 +1,6 @@
 {
   "name": "template",
   "version": "1.0.0",
-  "main": "index.html",
   "author": "motoki shun",
   "license": "MIT",
   "devDependencies": {

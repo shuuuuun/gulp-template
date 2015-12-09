@@ -1,5 +1,5 @@
 var DEST_PATH = './public/';
-var PORT = '2525';
+var PORT = '5353';
 var FALLBACK = '404.html';
 
 var gulp = require('gulp');
