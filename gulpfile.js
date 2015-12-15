@@ -1,3 +1,4 @@
+var HTTP_PATH = './public/';
 var DEST_PATH = './public/';
 var PORT = '2525';
 var FALLBACK = '404.html';
@@ -42,7 +43,7 @@ gulp.task('watch',function(){
 });
 
 gulp.task('server',function(){
-  gulp.src('public')
+  gulp.src(HTTP_PATH)
     .pipe(webserver({
       // directoryListing: true,
       host: '0.0.0.0',
