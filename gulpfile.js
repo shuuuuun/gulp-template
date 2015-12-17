@@ -113,6 +113,8 @@ gulp.task('compass',function(){
       css: DEST_PATH+'css/',
       sass: './src/scss/'
     }))
-    .pipe(minifyCss({compatibility: 'ie8'}))
+    .pipe(minifyCss({
+      advanced: false,
+    }))
     .pipe(gulp.dest(DEST_PATH+'css/'));
 });
