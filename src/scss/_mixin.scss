@@ -59,10 +59,10 @@
     $height: image-height($url);
 
     height: $height / 2;
-    a {
+    a, button {
         height: $height / 2;
     }
-    &:hover, a:hover {
+    &:hover, a:hover, button:hover {
         background-position: center bottom;
         cursor: pointer;
     }
@@ -72,10 +72,10 @@
     $height: image-height($url);
 
     height: $height / 2 / 2;
-    a {
+    a, button {
         height: $height / 2 / 2;
     }
-    &:hover, a:hover, &.hover, a.hover {
+    &:hover, a:hover, button:hover, &.hover, a.hover, button.hover {
         background-position: center bottom;
         cursor: pointer;
     }
@@ -118,7 +118,7 @@
     width: $width;
     height: $height;
 
-    a {
+    a, button {
         display: block;
         text-indent: -9999px;
         overflow: hidden;
@@ -132,10 +132,10 @@
     @if $sprite {
         height: $height / 2;
         
-        a {
+        a, button {
             height: $height / 2;
         }
-        a:hover {
+        a:hover, button:hover {
             background-position: center bottom;
         }
     }
@@ -177,7 +177,7 @@
     width: $width;
     height: $height;
 
-    a {
+    a, button {
         display: block;
         text-indent: -9999px;
         overflow: hidden;
@@ -191,10 +191,10 @@
     @if $sprite {
         height: $height / 2;
         
-        a {
+        a, button {
             height: $height / 2;
         }
-        a:hover {
+        a:hover, button:hover {
             background-position: center bottom;
         }
     }
