@@ -55,6 +55,13 @@
     cursor: pointer;
   }
 }
+
+@mixin anchor-state {
+    a, a:link, a:visited, a:hover, a:active {
+        @content;
+    }
+}
+
 @mixin sprite-button($url,$spritenum:2) {
     $height: image-height($url);
 
