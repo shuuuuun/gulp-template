@@ -47,6 +47,14 @@
         line-height: normal;
     }
 }
+@mixin reset-btn-style {
+  button {
+    border: none;
+    outline: none;
+    padding: 0;
+    cursor: pointer;
+  }
+}
 @mixin sprite-button($url,$spritenum:2) {
     $height: image-height($url);
 

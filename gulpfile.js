@@ -1,5 +1,6 @@
+var HTTP_PATH = './public/';
 var DEST_PATH = './public/';
-var PORT = '2525';
+var PORT = '5353';
 var FALLBACK = '404.html';
 
 var gulp = require('gulp');
@@ -43,7 +44,7 @@ gulp.task('watch',function(){
 });
 
 gulp.task('server',function(){
-  gulp.src('public')
+  gulp.src(HTTP_PATH)
     .pipe(webserver({
       // directoryListing: true,
       host: '0.0.0.0',
@@ -112,6 +113,8 @@ gulp.task('compass',function(){
       css: DEST_PATH+'css/',
       sass: './src/scss/'
     }))
-    .pipe(minifyCss({compatibility: 'ie8'}))
+    .pipe(minifyCss({
+      advanced: false,
+    }))
     .pipe(gulp.dest(DEST_PATH+'css/'));
 });
