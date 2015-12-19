@@ -4,7 +4,7 @@ var PORT = '5353';
 var FALLBACK = '404.html';
 
 var gulp = require('gulp');
-var plumber = require( 'gulp-plumber' );
+var plumber = require('gulp-plumber');
 var compass = require('gulp-compass');
 var jade = require('gulp-jade');
 var watch = require('gulp-watch');
@@ -23,8 +23,12 @@ var concatconfig = require('./concatconfig.js');
 
 
 // default task
-if (gutil.env.develop) gulp.task('default',['watch', 'server', 'jade', 'js-dev', 'compass-dev']);
-else gulp.task('default',['watch', 'server', 'jade', 'js', 'compass']);
+if (gutil.env.develop) {
+  gulp.task('default',['watch', 'server', 'jade', 'js-dev', 'compass-dev']);
+}
+else {
+  gulp.task('default',['watch', 'server', 'jade', 'js', 'compass']);
+}
 
 if (gutil.env.port) PORT = gutil.env.port;
 
