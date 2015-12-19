@@ -8,11 +8,11 @@ var DEST_HTML = DEST_PATH;
 var DEST_CSS = DEST_PATH + 'css/';
 var DEST_JS = DEST_PATH + 'js/';
 var SRC_JADE = SRC_PATH + 'jade/';
-var SRC_SCSS = SRC_PATH + 'scss/';
+var SRC_SASS = SRC_PATH + 'scss/';
 var SRC_JS = SRC_PATH + 'js/';
 var GLOB_UNBUILD = SRC_PATH + '!**/_**';
 var GLOB_JADE = SRC_JADE + '**/*.jade';
-var GLOB_SCSS = SRC_SCSS + '**/*.scss';
+var GLOB_SASS = SRC_SASS + '**/*.scss';
 var GLOB_JS = SRC_JS + '**/*.js';
 
 var gulp = require('gulp');
@@ -54,7 +54,7 @@ gulp.task('watch',function(){
     if (gutil.env.develop) gulp.start('js-dev');
     else gulp.start('js');
   });
-  watch(GLOB_SCSS,function(){
+  watch(GLOB_SASS,function(){
     gulp.start('compass');
   });
 });
@@ -111,23 +111,23 @@ gulp.task('css', ['compass']);
 
 gulp.task('compass-dev',function(){
   // minifyしない
-  gulp.src([GLOB_SCSS, GLOB_UNBUILD])
+  gulp.src([GLOB_SASS, GLOB_UNBUILD])
     .pipe(plumber())
     .pipe(compass({
       config_file: './config.rb',
       css: DEST_CSS,
-      sass: SRC_SCSS,
+      sass: SRC_SASS,
     }))
     .pipe(gulp.dest(DEST_CSS));
 });
 
 gulp.task('compass',function(){
-  gulp.src([GLOB_SCSS, GLOB_UNBUILD])
+  gulp.src([GLOB_SASS, GLOB_UNBUILD])
     .pipe(plumber())
     .pipe(compass({
       config_file: './config.rb',
       css: DEST_CSS,
-      sass: SRC_SCSS,
+      sass: SRC_SASS,
     }))
     .pipe(minifyCss({
       advanced: false,
