@@ -7,11 +7,11 @@ html(lang="ja")
     link(rel="stylesheet" href="./css/main.css")
     link(rel="stylesheet" href="./css/sp/main.css")
     
-    script(src="./js/script.js")
-    
   body
     include partials/_ua
     +ua("App")
     
     div.wrapper
-      h1 template
+      h1=share_title
+    
+    script(src="./js/script.js")
