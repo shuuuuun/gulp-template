@@ -10,7 +10,7 @@ var DEST_JS = DEST_PATH + 'js/';
 var SRC_JADE = SRC_PATH + 'jade/';
 var SRC_SASS = SRC_PATH + 'scss/';
 var SRC_JS = SRC_PATH + 'js/';
-var GLOB_UNBUILD = SRC_PATH + '!**/_**';
+var GLOB_UNBUILD = '!' + SRC_PATH + '**/_**';
 var GLOB_JADE = SRC_JADE + '**/*.jade';
 var GLOB_SASS = SRC_SASS + '**/*.scss';
 var GLOB_JS = SRC_JS + '**/*.js';
@@ -71,7 +71,7 @@ gulp.task('server',function(){
 });
 
 gulp.task('jade',function(){
-  gulp.src(GLOB_JADE)
+  gulp.src([GLOB_JADE, GLOB_UNBUILD])
     .pipe(plumber())
     .pipe(jade({
       pretty: true
