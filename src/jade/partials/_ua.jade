@@ -10,4 +10,5 @@ mixin ua(ns)
       ns.ua.isIE8 = /msie 8/.test(ua);
       ns.ua.isIE9 = /msie 9/.test(ua);
       if (ns.ua.isSP) doc.body.className += " isSP";
+      if (ns.ua.isPC) doc.body.className += " isPC";
     })(this, document);
