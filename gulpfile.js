@@ -27,6 +27,7 @@ var rename = require('gulp-rename');
 var concat = require("gulp-concat");
 var minifyCss = require("gulp-minify-css");
 var gulpif = require("gulp-if");
+var gulpIgnore = require("gulp-ignore");
 
 var concatconfig = require('./config/concat.js');
 var siteconfig = require('./config/site.js');
@@ -94,25 +95,36 @@ gulp.task('jade',function(){
 
 gulp.task('js-dev',function(){
   // minifyしない
-  gulp.src([GLOB_JS, GLOB_UNBUILD])
+  gulp.src(concatconfig.files) // concat
     .pipe(plumber())
-    .pipe(gulpif(function(file){ // concatconfigにあるファイルはconcat、なければそのままcopy
+    .pipe(concat(concatconfig.dest))
+    .pipe(gulp.dest(DEST_JS));
+  
+  gulp.src([GLOB_JS, GLOB_UNBUILD]) // copy
+    .pipe(plumber())
+    .pipe(gulpIgnore.exclude(function(file){ // concatconfigにあるファイルは除く
       return concatconfig.files.some(function(val){
         return (file.path.indexOf(val) >= 0);
       });
-    }, concat(concatconfig.dest)))
+    }))
     .pipe(gulp.dest(DEST_JS));
 });
 
 gulp.task('js',function(){
   // minifyする
-  gulp.src([GLOB_JS, GLOB_UNBUILD])
+  gulp.src(concatconfig.files) // concat
     .pipe(plumber())
-    .pipe(gulpif(function(file){ // concatconfigにあるファイルはconcat、なければそのままcopy
+    .pipe(concat(concatconfig.dest))
+    .pipe(uglify({preserveComments: 'some'}))
+    .pipe(gulp.dest(DEST_JS));
+  
+  gulp.src([GLOB_JS, GLOB_UNBUILD]) // copy
+    .pipe(plumber())
+    .pipe(gulpIgnore.exclude(function(file){ // concatconfigにあるファイルは除く
       return concatconfig.files.some(function(val){
         return (file.path.indexOf(val) >= 0);
       });
-    }, concat(concatconfig.dest)))
+    }))
     .pipe(uglify({preserveComments: 'some'}))
     .pipe(gulp.dest(DEST_JS));
 });
