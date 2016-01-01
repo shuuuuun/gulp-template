@@ -26,6 +26,7 @@ var gutil = require('gulp-util');
 var rename = require('gulp-rename');
 var concat = require("gulp-concat");
 var minifyCss = require("gulp-minify-css");
+var gulpif = require("gulp-if");
 
 var concatconfig = require('./config/concat.js');
 var siteconfig = require('./config/site.js');
@@ -93,17 +94,25 @@ gulp.task('jade',function(){
 
 gulp.task('js-dev',function(){
   // minifyしない
-  gulp.src(concatconfig.files)
+  gulp.src([GLOB_JS, GLOB_UNBUILD])
     .pipe(plumber())
-    .pipe(concat(concatconfig.dest))
+    .pipe(gulpif(function(file){ // concatconfigにあるファイルはconcat、なければそのままcopy
+      return concatconfig.files.some(function(val){
+        return (file.path.indexOf(val) >= 0);
+      });
+    }, concat(concatconfig.dest)))
     .pipe(gulp.dest(DEST_JS));
 });
 
 gulp.task('js',function(){
   // minifyする
-  gulp.src(concatconfig.files)
+  gulp.src([GLOB_JS, GLOB_UNBUILD])
     .pipe(plumber())
-    .pipe(concat(concatconfig.dest))
+    .pipe(gulpif(function(file){ // concatconfigにあるファイルはconcat、なければそのままcopy
+      return concatconfig.files.some(function(val){
+        return (file.path.indexOf(val) >= 0);
+      });
+    }, concat(concatconfig.dest)))
     .pipe(uglify({preserveComments: 'some'}))
     .pipe(gulp.dest(DEST_JS));
 });
