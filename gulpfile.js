@@ -27,7 +27,7 @@ var rename = require('gulp-rename');
 var concat = require("gulp-concat");
 var minifyCss = require("gulp-minify-css");
 
-var concatconfig = require('./concatconfig.js');
+var concatconfig = require('./config/concat.js');
 var siteconfig = require('./config/site.js');
 
 
