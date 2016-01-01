@@ -28,6 +28,7 @@ var concat = require("gulp-concat");
 var minifyCss = require("gulp-minify-css");
 
 var concatconfig = require('./concatconfig.js');
+var siteconfig = require('./config/site.js');
 
 
 // $ gulp --develop でjsをminifyしないサーバー起動
@@ -74,6 +75,7 @@ gulp.task('jade',function(){
   gulp.src([GLOB_JADE, GLOB_UNBUILD])
     .pipe(plumber())
     .pipe(jade({
+      locals: siteconfig,
       pretty: true
     }))
     .pipe(rename(function(path){
