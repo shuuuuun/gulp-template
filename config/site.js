@@ -1,7 +1,6 @@
 var domain = "http://localhost";
-var url = domain;
+var url = domain + "/";
 var meta_description = "description";
-var share_image = domain + "/img/ogp.png";
 
 module.exports = {
   domain: domain,
@@ -16,7 +15,6 @@ module.exports = {
   share_image: domain + "/img/ogp.png",
   
   og_description: meta_description,
-  og_image_url: share_image,
   og_image_width: 0,
   og_image_height: 0,
   
