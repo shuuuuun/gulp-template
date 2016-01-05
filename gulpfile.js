@@ -48,6 +48,8 @@ else {
 if (gutil.env.port) PORT = gutil.env.port;
 
 
+gulp.task('build', ['jade', 'js', 'compass']);
+
 gulp.task('watch',function(){
   // gulp.watch(['./src/jade/*.jade','./src/jade/**/*.jade','./src/jade/**/_*.jade'],['jade']);
   watch(GLOB_JADE,function(){
