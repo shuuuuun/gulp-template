@@ -33,8 +33,8 @@ var concatconfig = require('./config/concat.js');
 var siteconfig = require('./config/site.js');
 
 
-// $ gulp --develop でjsをminifyしないサーバー起動
-// $ gulp --port 0000 でport指定してサーバー起動
+// $ gulp --develop でjs,cssをminifyしない
+// $ gulp --port 0000 でport指定
 
 
 // default task
@@ -95,29 +95,11 @@ gulp.task('jade',function(){
     .pipe(gulp.dest(DEST_HTML));
 });
 
-gulp.task('js-dev',function(){
-  // minifyしない
-  gulp.src(concatconfig.files) // concat
-    .pipe(plumber())
-    .pipe(concat(concatconfig.dest))
-    .pipe(gulp.dest(DEST_JS));
-  
-  gulp.src([GLOB_JS, GLOB_UNBUILD]) // copy
-    .pipe(plumber())
-    .pipe(gulpIgnore.exclude(function(file){ // concatconfigにあるファイルは除く
-      return concatconfig.files.some(function(val){
-        return (file.path.indexOf(val) >= 0);
-      });
-    }))
-    .pipe(gulp.dest(DEST_JS));
-});
-
 gulp.task('js',function(){
-  // minifyする
   gulp.src(concatconfig.files) // concat
     .pipe(plumber())
     .pipe(concat(concatconfig.dest))
-    .pipe(uglify({preserveComments: 'some'}))
+    .pipe(gulpif(!gutil.env.develop, uglify({preserveComments: 'some'}))) // developモードではminifyしない
     .pipe(gulp.dest(DEST_JS));
   
   gulp.src([GLOB_JS, GLOB_UNBUILD]) // copy
@@ -127,24 +109,11 @@ gulp.task('js',function(){
         return (file.path.indexOf(val) >= 0);
       });
     }))
-    .pipe(uglify({preserveComments: 'some'}))
+    .pipe(gulpif(!gutil.env.develop, uglify({preserveComments: 'some'}))) // developモードではminifyしない
     .pipe(gulp.dest(DEST_JS));
 });
 
-gulp.task('css-dev', ['compass-dev']);
 gulp.task('css', ['compass']);
-
-gulp.task('compass-dev',function(){
-  // minifyしない
-  gulp.src([GLOB_SASS, GLOB_UNBUILD])
-    .pipe(plumber())
-    .pipe(compass({
-      config_file: './config.rb',
-      css: DEST_CSS,
-      sass: SRC_SASS,
-    }))
-    .pipe(gulp.dest(DEST_CSS));
-});
 
 gulp.task('compass',function(){
   gulp.src([GLOB_SASS, GLOB_UNBUILD])
@@ -154,8 +123,6 @@ gulp.task('compass',function(){
       css: DEST_CSS,
       sass: SRC_SASS,
     }))
-    .pipe(minifyCss({
-      advanced: false,
-    }))
+    .pipe(gulpif(!gutil.env.develop, minifyCss({ advanced: false }))) // developモードではminifyしない
     .pipe(gulp.dest(DEST_CSS));
 });
