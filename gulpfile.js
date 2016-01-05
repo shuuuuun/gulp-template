@@ -4,6 +4,7 @@ var FALLBACK = '404.html';
 var HTTP_PATH = './public/';
 var DEST_PATH = './public/';
 var SRC_PATH = './src/';
+var CONFIG_PATH = './config/';
 var DEST_HTML = DEST_PATH;
 var DEST_CSS = DEST_PATH + 'css/';
 var DEST_JS = DEST_PATH + 'js/';
@@ -14,6 +15,7 @@ var GLOB_UNBUILD = '!' + SRC_PATH + '**/_**';
 var GLOB_JADE = SRC_JADE + '**/*.jade';
 var GLOB_SASS = SRC_SASS + '**/*.scss';
 var GLOB_JS = SRC_JS + '**/*.js';
+var GLOB_CONFIG = CONFIG_PATH + '**/*';
 
 var gulp = require('gulp');
 var plumber = require('gulp-plumber');
@@ -29,8 +31,8 @@ var minifyCss = require("gulp-minify-css");
 var gulpif = require("gulp-if");
 var gulpIgnore = require("gulp-ignore");
 
-var concatconfig = require('./config/concat.js');
-var siteconfig = require('./config/site.js');
+var concatconfig = require(CONFIG_PATH + 'concat.js');
+var siteconfig = require(CONFIG_PATH + 'site.js');
 
 
 // $ gulp --develop でjs,cssをminifyしない
