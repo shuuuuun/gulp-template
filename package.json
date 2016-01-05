@@ -3,6 +3,11 @@
   "version": "1.0.0",
   "author": "motoki shun",
   "license": "MIT",
+  "scripts": {
+    "start": "gulp",
+    "build": "gulp build",
+    "watch": "gulp watch"
+  },
   "devDependencies": {
     "gulp": "^3.9.0",
     "gulp-compass": "^2.1.0",
