@@ -31,19 +31,20 @@ var minifyCss = require("gulp-minify-css");
 var gulpif = require("gulp-if");
 var gulpIgnore = require("gulp-ignore");
 
-var concatconfig = require(CONFIG_PATH + 'concat.js');
-var siteconfig = require(CONFIG_PATH + 'site.js');
+var config = {
+  concat: require(CONFIG_PATH + 'concat.js'),
+  site: require(CONFIG_PATH + 'site.js'),
+};
+
+if (gutil.env.port) PORT = gutil.env.port;
 
 
 // $ gulp --develop でjs,cssをminifyしない
 // $ gulp --port 0000 でport指定
 
 
-// default task
+// tasks
 gulp.task('default',['watch', 'server', 'jade', 'js', 'compass']);
-
-if (gutil.env.port) PORT = gutil.env.port;
-
 
 gulp.task('build', ['jade', 'js', 'compass']);
 
@@ -75,7 +76,7 @@ gulp.task('jade',function(){
   gulp.src([GLOB_JADE, GLOB_UNBUILD])
     .pipe(plumber())
     .pipe(jade({
-      locals: siteconfig,
+      locals: config.site,
       pretty: true
     }))
     .pipe(rename(function(path){
@@ -92,16 +93,16 @@ gulp.task('jade',function(){
 });
 
 gulp.task('js',function(){
-  gulp.src(concatconfig.files) // concat
+  gulp.src(config.concat.files) // concat
     .pipe(plumber())
-    .pipe(concat(concatconfig.dest))
+    .pipe(concat(config.concat.dest))
     .pipe(gulpif(!gutil.env.develop, uglify({preserveComments: 'some'}))) // developモードではminifyしない
     .pipe(gulp.dest(DEST_JS));
   
   gulp.src([GLOB_JS, GLOB_UNBUILD]) // copy
     .pipe(plumber())
     .pipe(gulpIgnore.exclude(function(file){ // concatconfigにあるファイルは除く
-      return concatconfig.files.some(function(val){
+      return config.concat.files.some(function(val){
         return (file.path.indexOf(val) >= 0);
       });
     }))
