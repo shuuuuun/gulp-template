@@ -40,12 +40,7 @@ var siteconfig = require(CONFIG_PATH + 'site.js');
 
 
 // default task
-if (gutil.env.develop) {
-  gulp.task('default',['watch', 'server', 'jade', 'js-dev', 'compass-dev']);
-}
-else {
-  gulp.task('default',['watch', 'server', 'jade', 'js', 'compass']);
-}
+gulp.task('default',['watch', 'server', 'jade', 'js', 'compass']);
 
 if (gutil.env.port) PORT = gutil.env.port;
 
@@ -58,8 +53,7 @@ gulp.task('watch',function(){
     gulp.start('jade');
   });
   watch(GLOB_JS,function(){
-    if (gutil.env.develop) gulp.start('js-dev');
-    else gulp.start('js');
+    gulp.start('js');
   });
   watch(GLOB_SASS,function(){
     gulp.start('compass');
