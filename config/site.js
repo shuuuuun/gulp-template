@@ -6,27 +6,27 @@ module.exports = {
   domain: domain,
   url: url,
   
-  siteName: "template",
+  site_name: "template",
   title: "template",
   
-  meta_description: "description",
-  meta_keywords: ["key", "words"],
+  // meta_description: "description",
+  // meta_keywords: ["key", "words"],
   
-  share_image: domain + "/img/ogp.png",
+  // share_image: domain + "/img/ogp.png",
   
-  og_description: meta_description,
-  og_image_width: 0,
-  og_image_height: 0,
+  // og_description: meta_description,
+  // og_image_width: 0,
+  // og_image_height: 0,
   
-  tw_description: meta_description,
-  tw_hashtags: ["hashtag"],
-  tw_site: "@hoge",
-  tw_creator: "@hoge",
+  // tw_description: meta_description,
+  // tw_hashtags: ["hashtag"],
+  // tw_site: "@hoge",
+  // tw_creator: "@hoge",
   
-  line_description: meta_description + " " + url,
+  // line_description: meta_description + " " + url,
   
-  fb_appid: "",
+  // fb_appid: "",
   
-  favicon_url: domain + "/favicon.ico",
-  apple_touch_icon_url: domain + "/favicon.ico",
+  // favicon_url: domain + "/favicon.ico",
+  // apple_touch_icon_url: domain + "/favicon.ico",
 };
