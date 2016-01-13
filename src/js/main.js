@@ -1,13 +1,8 @@
-(function(win, doc){
-  var ns = win.App = win.App || {};
-  
-  var util = new ns.Util();
-  
-})(this, document);
+var Util = require("Util");
 
+var util = new ns.Util();
 
-
-class Hoge {
+class Main {
   constructor(a, b) {
     this.a = a;
     this.b = b;
@@ -17,11 +12,5 @@ class Hoge {
   }
 }
 
-var hoge = new Hoge(1, 2);
-hoge.exec();
-
-var fuga = () => {
-  console.log("this is submodule kasnuu");
-};
-
-module.exports = fuga;
+var main = new Main(1, 2);
+main.exec();

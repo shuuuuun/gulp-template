@@ -127,10 +127,13 @@ gulp.task('compass',function(){
 
 gulp.task('script',function(){
   browserify({
-    entries: ['./src/js/main.js']
+    entries: [
+      './src/js/Util.js',
+      './src/js/main.js'
+    ]
   })
   .transform(babelify)
   .bundle()
   .pipe(source('scripts.js'))
-  .pipe(gulp.dest(DEST_PATH+'js/'));
+  .pipe(gulp.dest(DEST_JS));
 });
