@@ -93,13 +93,9 @@ gulp.task('jade',function(){
     .pipe(gulp.dest(DEST_HTML));
 });
 
-gulp.task('js',function(){
-  gulp.src(config.concat.files) // concat
-    .pipe(plumber())
-    .pipe(concat(config.concat.dest))
-    .pipe(gulpif(!gutil.env.develop, uglify({preserveComments: 'some'}))) // developモードではminifyしない
-    .pipe(gulp.dest(DEST_JS));
-  
+gulp.task('js', ['browserify', 'js-copy']);
+
+gulp.task('js-copy',function(){
   gulp.src([GLOB_JS, GLOB_UNBUILD]) // copy
     .pipe(plumber())
     .pipe(gulpIgnore.exclude(function(file){ // concatconfigにあるファイルは除く
@@ -125,7 +121,7 @@ gulp.task('compass',function(){
     .pipe(gulp.dest(DEST_CSS));
 });
 
-gulp.task('script',function(){
+gulp.task('browserify',function(){
   browserify({
     entries: [
       './src/js/Util.js',
