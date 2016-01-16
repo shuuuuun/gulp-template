@@ -26,10 +26,10 @@ var webserver = require('gulp-webserver');
 var uglify = require('gulp-uglify');
 var gutil = require('gulp-util');
 var rename = require('gulp-rename');
-var concat = require("gulp-concat");
-var minifyCss = require("gulp-minify-css");
-var gulpif = require("gulp-if");
-var gulpIgnore = require("gulp-ignore");
+var concat = require('gulp-concat');
+var minifyCss = require('gulp-minify-css');
+var gulpif = require('gulp-if');
+var gulpIgnore = require('gulp-ignore');
 
 var config = {
   concat: require(CONFIG_PATH + 'concat.js'),
