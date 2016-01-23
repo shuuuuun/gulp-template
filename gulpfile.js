@@ -9,7 +9,7 @@ var DEST_HTML = DEST_PATH;
 var DEST_CSS = DEST_PATH + 'css/';
 var DEST_JS = DEST_PATH + 'js/';
 var SRC_JADE = SRC_PATH + 'jade/';
-var SRC_SASS = SRC_PATH + 'scss/';
+var SRC_SASS = SRC_PATH + 'sass/';
 var SRC_JS = SRC_PATH + 'js/';
 var GLOB_UNBUILD = '!' + SRC_PATH + '**/_**';
 var GLOB_JADE = SRC_JADE + '**/*.jade';
@@ -26,10 +26,10 @@ var webserver = require('gulp-webserver');
 var uglify = require('gulp-uglify');
 var gutil = require('gulp-util');
 var rename = require('gulp-rename');
-var concat = require("gulp-concat");
-var minifyCss = require("gulp-minify-css");
-var gulpif = require("gulp-if");
-var gulpIgnore = require("gulp-ignore");
+var concat = require('gulp-concat');
+var minifyCss = require('gulp-minify-css');
+var gulpif = require('gulp-if');
+var gulpIgnore = require('gulp-ignore');
 
 var config = {
   concat: require(CONFIG_PATH + 'concat.js'),
