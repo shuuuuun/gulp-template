@@ -13,7 +13,8 @@ var SRC_SASS = SRC_PATH + 'sass/';
 var SRC_JS = SRC_PATH + 'js/';
 var GLOB_UNBUILD = '!' + SRC_PATH + '**/_**';
 var GLOB_JADE = SRC_JADE + '**/*.jade';
-var GLOB_SASS = SRC_SASS + '**/*.scss';
+var GLOB_SASS = SRC_SASS + '**/*.sass';
+var GLOB_SCSS = SRC_SASS + '**/*.scss';
 var GLOB_JS = SRC_JS + '**/*.js';
 var GLOB_CONFIG = CONFIG_PATH + '**/*';
 
@@ -56,7 +57,7 @@ gulp.task('watch',function(){
   watch(GLOB_JS,function(){
     gulp.start('js');
   });
-  watch(GLOB_SASS,function(){
+  watch([GLOB_SASS, GLOB_SCSS],function(){
     gulp.start('compass');
   });
 });
@@ -113,7 +114,7 @@ gulp.task('js',function(){
 gulp.task('css', ['compass']);
 
 gulp.task('compass',function(){
-  gulp.src([GLOB_SASS, GLOB_UNBUILD])
+  gulp.src([GLOB_SASS, GLOB_SCSS, GLOB_UNBUILD])
     .pipe(plumber())
     .pipe(compass({
       config_file: './config.rb',
