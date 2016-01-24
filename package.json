@@ -3,10 +3,17 @@
   "version": "1.0.0",
   "author": "motoki shun",
   "license": "MIT",
+  "engines": {
+    "node": ">=4.0.0"
+  },
   "scripts": {
     "start": "gulp",
+    "server": "gulp server",
+    "watch": "gulp watch",
     "build": "gulp build",
-    "watch": "gulp watch"
+    "build-html": "gulp html",
+    "build-css": "gulp css",
+    "build-js": "gulp js"
   },
   "devDependencies": {
     "gulp": "^3.9.0",
