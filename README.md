@@ -2,12 +2,10 @@
 
 自分用のプロジェクトテンプレート
 
-作成中...
+- version/html
+- version/minimum
+- version/concat
+- version/browserify
+- version/babelify(ES2015)
 
-- minimum
-- concat
-- browserify
-- babelify(ES6)
-
-masterは気分で変える
-
+concatとbabelifyがメインになっていきそう
