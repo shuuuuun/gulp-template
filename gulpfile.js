@@ -9,13 +9,15 @@ var DEST_HTML = DEST_PATH;
 var DEST_CSS = DEST_PATH + 'css/';
 var DEST_JS = DEST_PATH + 'js/';
 var SRC_JADE = SRC_PATH + 'jade/';
-var SRC_SASS = SRC_PATH + 'scss/';
+var SRC_SASS = SRC_PATH + 'sass/';
 var SRC_JS = SRC_PATH + 'js/';
 var GLOB_UNBUILD = '!' + SRC_PATH + '**/_**';
 var GLOB_JADE = SRC_JADE + '**/*.jade';
-var GLOB_SASS = SRC_SASS + '**/*.scss';
+var GLOB_SASS = SRC_SASS + '**/*.sass';
+var GLOB_SCSS = SRC_SASS + '**/*.scss';
 var GLOB_JS = SRC_JS + '**/*.js';
 var GLOB_CONFIG = CONFIG_PATH + '**/*';
+var COMPASS_CONFIG_PATH = CONFIG_PATH + 'compass.rb';
 
 var gulp = require('gulp');
 var plumber = require('gulp-plumber');
@@ -57,7 +59,7 @@ gulp.task('watch',function(){
   watch(GLOB_JS,function(){
     gulp.start('js');
   });
-  watch(GLOB_SASS,function(){
+  watch([GLOB_SASS, GLOB_SCSS],function(){
     gulp.start('compass');
   });
 });
@@ -110,10 +112,10 @@ gulp.task('js-copy',function(){
 gulp.task('css', ['compass']);
 
 gulp.task('compass',function(){
-  gulp.src([GLOB_SASS, GLOB_UNBUILD])
+  gulp.src([GLOB_SASS, GLOB_SCSS, GLOB_UNBUILD])
     .pipe(plumber())
     .pipe(compass({
-      config_file: './config.rb',
+      config_file: COMPASS_CONFIG_PATH,
       css: DEST_CSS,
       sass: SRC_SASS,
     }))
