@@ -47,9 +47,11 @@ if (gutil.env.port) PORT = gutil.env.port;
 
 
 // tasks
-gulp.task('default',['watch', 'server', 'jade', 'js', 'compass']);
-
-gulp.task('build', ['jade', 'js', 'compass']);
+gulp.task('default',['watch', 'server', 'html', 'css', 'js']);
+gulp.task('build', ['html', 'css', 'js']);
+gulp.task('html', ['jade']);
+gulp.task('css', ['compass']);
+gulp.task('js', ['browserify', 'js-copy']);
 
 gulp.task('watch',function(){
   // gulp.watch(['./src/jade/*.jade','./src/jade/**/*.jade','./src/jade/**/_*.jade'],['jade']);
@@ -95,7 +97,17 @@ gulp.task('jade',function(){
     .pipe(gulp.dest(DEST_HTML));
 });
 
-gulp.task('js', ['browserify', 'js-copy']);
+gulp.task('compass',function(){
+  gulp.src([GLOB_SASS, GLOB_SCSS, GLOB_UNBUILD])
+    .pipe(plumber())
+    .pipe(compass({
+      config_file: COMPASS_CONFIG_PATH,
+      css: DEST_CSS,
+      sass: SRC_SASS,
+    }))
+    .pipe(gulpif(!gutil.env.develop, minifyCss({ advanced: false }))) // developモードではminifyしない
+    .pipe(gulp.dest(DEST_CSS));
+});
 
 gulp.task('js-copy',function(){
   gulp.src([GLOB_JS, GLOB_UNBUILD]) // copy
@@ -107,20 +119,6 @@ gulp.task('js-copy',function(){
     }))
     .pipe(gulpif(!gutil.env.develop, uglify({preserveComments: 'some'}))) // developモードではminifyしない
     .pipe(gulp.dest(DEST_JS));
-});
-
-gulp.task('css', ['compass']);
-
-gulp.task('compass',function(){
-  gulp.src([GLOB_SASS, GLOB_SCSS, GLOB_UNBUILD])
-    .pipe(plumber())
-    .pipe(compass({
-      config_file: COMPASS_CONFIG_PATH,
-      css: DEST_CSS,
-      sass: SRC_SASS,
-    }))
-    .pipe(gulpif(!gutil.env.develop, minifyCss({ advanced: false }))) // developモードではminifyしない
-    .pipe(gulp.dest(DEST_CSS));
 });
 
 gulp.task('browserify',function(){
