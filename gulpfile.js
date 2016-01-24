@@ -46,9 +46,11 @@ if (gutil.env.port) PORT = gutil.env.port;
 
 
 // tasks
-gulp.task('default',['watch', 'server', 'jade', 'js', 'compass']);
-
-gulp.task('build', ['jade', 'js', 'compass']);
+gulp.task('default',['watch', 'server', 'html', 'css', 'js']);
+gulp.task('build', ['html', 'css', 'js']);
+gulp.task('html', ['jade']);
+gulp.task('css', ['compass']);
+gulp.task('js', ['js-concat', 'js-copy']);
 
 gulp.task('watch',function(){
   // gulp.watch(['./src/jade/*.jade','./src/jade/**/*.jade','./src/jade/**/_*.jade'],['jade']);
@@ -94,26 +96,6 @@ gulp.task('jade',function(){
     .pipe(gulp.dest(DEST_HTML));
 });
 
-gulp.task('js',function(){
-  gulp.src(config.concat.files) // concat
-    .pipe(plumber())
-    .pipe(concat(config.concat.dest))
-    .pipe(gulpif(!gutil.env.develop, uglify({preserveComments: 'some'}))) // developモードではminifyしない
-    .pipe(gulp.dest(DEST_JS));
-  
-  gulp.src([GLOB_JS, GLOB_UNBUILD]) // copy
-    .pipe(plumber())
-    .pipe(gulpIgnore.exclude(function(file){ // concatconfigにあるファイルは除く
-      return config.concat.files.some(function(val){
-        return (file.path.indexOf(val) >= 0);
-      });
-    }))
-    .pipe(gulpif(!gutil.env.develop, uglify({preserveComments: 'some'}))) // developモードではminifyしない
-    .pipe(gulp.dest(DEST_JS));
-});
-
-gulp.task('css', ['compass']);
-
 gulp.task('compass',function(){
   gulp.src([GLOB_SASS, GLOB_SCSS, GLOB_UNBUILD])
     .pipe(plumber())
@@ -124,4 +106,24 @@ gulp.task('compass',function(){
     }))
     .pipe(gulpif(!gutil.env.develop, minifyCss({ advanced: false }))) // developモードではminifyしない
     .pipe(gulp.dest(DEST_CSS));
+});
+
+gulp.task('js-copy',function(){
+  gulp.src([GLOB_JS, GLOB_UNBUILD])
+    .pipe(plumber())
+    .pipe(gulpIgnore.exclude(function(file){ // concatconfigにあるファイルは除く
+      return config.concat.files.some(function(val){
+        return (file.path.indexOf(val) >= 0);
+      });
+    }))
+    .pipe(gulpif(!gutil.env.develop, uglify({preserveComments: 'some'}))) // developモードではminifyしない
+    .pipe(gulp.dest(DEST_JS));
+});
+
+gulp.task('js-concat',function(){
+  gulp.src(config.concat.files)
+    .pipe(plumber())
+    .pipe(concat(config.concat.dest))
+    .pipe(gulpif(!gutil.env.develop, uglify({preserveComments: 'some'}))) // developモードではminifyしない
+    .pipe(gulp.dest(DEST_JS));
 });
