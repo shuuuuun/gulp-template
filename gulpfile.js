@@ -17,6 +17,7 @@ var GLOB_SASS = SRC_SASS + '**/*.sass';
 var GLOB_SCSS = SRC_SASS + '**/*.scss';
 var GLOB_JS = SRC_JS + '**/*.js';
 var GLOB_CONFIG = CONFIG_PATH + '**/*';
+var COMPASS_CONFIG_PATH = CONFIG_PATH + 'compass.rb';
 
 var gulp = require('gulp');
 var plumber = require('gulp-plumber');
@@ -117,7 +118,7 @@ gulp.task('compass',function(){
   gulp.src([GLOB_SASS, GLOB_SCSS, GLOB_UNBUILD])
     .pipe(plumber())
     .pipe(compass({
-      config_file: './config.rb',
+      config_file: COMPASS_CONFIG_PATH,
       css: DEST_CSS,
       sass: SRC_SASS,
     }))
