@@ -1,6 +1,8 @@
-var Util = require("Util");
+import $ from 'jquery';
+// var Util = require('./Util');
+import Util from './Util';
 
-var util = new ns.Util();
+var util = new Util();
 
 class Main {
   constructor(a, b) {
