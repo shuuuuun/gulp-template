@@ -37,6 +37,8 @@ var gulpIgnore = require('gulp-ignore');
 
 var config = {
   site: require(CONFIG_PATH + 'site.js'),
+  jsCopy: require(CONFIG_PATH + 'js-copy.js'),
+  browserify: require(CONFIG_PATH + 'browserify.js'),
 };
 
 if (gutil.env.port) PORT = gutil.env.port;
@@ -110,7 +112,7 @@ gulp.task('compass',function(){
 });
 
 gulp.task('js-copy',function(){
-  gulp.src([GLOB_JS, GLOB_UNBUILD]) // copy
+  gulp.src(config.jsCopy.files)
     .pipe(plumber())
     .pipe(gulpif(!gutil.env.develop, uglify({preserveComments: 'some'}))) // developモードではminifyしない
     .pipe(gulp.dest(DEST_JS));
@@ -118,13 +120,10 @@ gulp.task('js-copy',function(){
 
 gulp.task('browserify',function(){
   browserify({
-    entries: [
-      './src/js/Util.js',
-      './src/js/main.js'
-    ]
+    entries: config.browserify.entries,
   })
-  .transform(babelify)
+  .transform(babelify, { presets: ['es2015'] })
   .bundle()
-  .pipe(source('scripts.js'))
+  .pipe(source(config.browserify.dest))
   .pipe(gulp.dest(DEST_JS));
 });
