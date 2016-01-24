@@ -31,9 +31,9 @@ var rename = require('gulp-rename');
 var browserify = require('browserify');
 var source = require('vinyl-source-stream');
 var babelify = require('babelify');
-var minifyCss = require("gulp-minify-css");
-var gulpif = require("gulp-if");
-var gulpIgnore = require("gulp-ignore");
+var minifyCss = require('gulp-minify-css');
+var gulpif = require('gulp-if');
+var gulpIgnore = require('gulp-ignore');
 
 var config = {
   site: require(CONFIG_PATH + 'site.js'),
