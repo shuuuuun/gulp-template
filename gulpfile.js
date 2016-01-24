@@ -112,11 +112,6 @@ gulp.task('compass',function(){
 gulp.task('js-copy',function(){
   gulp.src([GLOB_JS, GLOB_UNBUILD]) // copy
     .pipe(plumber())
-    .pipe(gulpIgnore.exclude(function(file){ // concatconfigにあるファイルは除く
-      return config.concat.files.some(function(val){
-        return (file.path.indexOf(val) >= 0);
-      });
-    }))
     .pipe(gulpif(!gutil.env.develop, uglify({preserveComments: 'some'}))) // developモードではminifyしない
     .pipe(gulp.dest(DEST_JS));
 });
