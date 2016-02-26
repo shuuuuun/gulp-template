@@ -63,6 +63,7 @@
     background: none;
     padding: 0;
     cursor: pointer;
+    font: inherit;
 }
 
 @mixin anchor-state {
