@@ -49,7 +49,7 @@ if (gutil.env.port) PORT = gutil.env.port;
 
 
 // tasks
-gulp.task('default',['watch', 'server', 'html', 'css', 'js']);
+gulp.task('default',['build', 'server', 'watch']);
 gulp.task('build', ['html', 'css', 'js']);
 gulp.task('html', ['jade']);
 gulp.task('css', ['compass']);

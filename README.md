@@ -16,7 +16,7 @@ npm install
 - `npm start`
   - `gulp`でも可
 
-- 開発用サーバーを起動、現在のソースからビルドし、ファイルの監視を開始します
+- 現在のソースからビルドし、開発用サーバーを起動、ファイルの監視を開始します
   - `gulp server` `gulp build` `gulp watch`と同じです
 
 ### server
