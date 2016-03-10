@@ -1,4 +1,4 @@
-var $win = $(win);
+var $win = $(window);
 
 function Util(){
   this.getWinSize();
@@ -13,8 +13,8 @@ Util.prototype.bindOnResize = function(){
 };
 
 Util.prototype.getWinSize = function(){
-  ns.winW = Math.max( $win.width(), (win.innerWidth || 0) );
-  ns.winH = Math.max( $win.height(), (win.innerHeight || 0) );
+  window.winW = Math.max( $win.width(), (window.innerWidth || 0) );
+  window.winH = Math.max( $win.height(), (window.innerHeight || 0) );
 };
 
 Util.prototype.getRandomInt = function(min, max){
