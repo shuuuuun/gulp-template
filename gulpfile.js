@@ -17,11 +17,10 @@ var GLOB_SASS = SRC_SASS + '**/*.sass';
 var GLOB_SCSS = SRC_SASS + '**/*.scss';
 var GLOB_JS = SRC_JS + '**/*.js';
 var GLOB_CONFIG = CONFIG_PATH + '**/*';
-var COMPASS_CONFIG_PATH = CONFIG_PATH + 'compass.rb';
 
 var gulp = require('gulp');
 var plumber = require('gulp-plumber');
-var compass = require('gulp-compass');
+var sass = require('gulp-sass');
 var jade = require('gulp-jade');
 var watch = require('gulp-watch');
 var webserver = require('gulp-webserver');
@@ -52,7 +51,7 @@ if (gutil.env.port) PORT = gutil.env.port;
 gulp.task('default',['build', 'server', 'watch']);
 gulp.task('build', ['html', 'css', 'js']);
 gulp.task('html', ['jade']);
-gulp.task('css', ['compass']);
+gulp.task('css', ['sass']);
 gulp.task('js', ['browserify', 'js-copy']);
 
 gulp.task('watch',function(){
@@ -64,7 +63,7 @@ gulp.task('watch',function(){
     gulp.start('js');
   });
   watch([GLOB_SASS, GLOB_SCSS],function(){
-    gulp.start('compass');
+    gulp.start('sass');
   });
 });
 
@@ -99,14 +98,10 @@ gulp.task('jade',function(){
     .pipe(gulp.dest(DEST_HTML));
 });
 
-gulp.task('compass',function(){
+gulp.task('sass',function(){
   gulp.src([GLOB_SASS, GLOB_SCSS, GLOB_UNBUILD])
     .pipe(plumber())
-    .pipe(compass({
-      config_file: COMPASS_CONFIG_PATH,
-      css: DEST_CSS,
-      sass: SRC_SASS,
-    }))
+    .pipe(sass())
     .pipe(gulpif(!gutil.env.develop, minifyCss({ advanced: false }))) // developモードではminifyしない
     .pipe(gulp.dest(DEST_CSS));
 });
