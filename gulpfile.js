@@ -34,6 +34,7 @@ var babelify = require('babelify');
 var minifyCss = require('gulp-minify-css');
 var gulpif = require('gulp-if');
 var gulpIgnore = require('gulp-ignore');
+var autoprefixer = require('gulp-autoprefixer');
 
 var config = {
   site: require(CONFIG_PATH + 'site.js'),
@@ -106,6 +107,10 @@ gulp.task('compass',function(){
       config_file: COMPASS_CONFIG_PATH,
       css: DEST_CSS,
       sass: SRC_SASS,
+    }))
+    .pipe(autoprefixer({
+      browsers: ['last 2 versions'],
+      cascade: false, // インデント
     }))
     .pipe(gulpif(!gutil.env.develop, minifyCss({ advanced: false }))) // developモードではminifyしない
     .pipe(gulp.dest(DEST_CSS));
