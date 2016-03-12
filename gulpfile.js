@@ -40,6 +40,7 @@ var config = {
   site: require(CONFIG_PATH + 'site.js'),
   jsCopy: require(CONFIG_PATH + 'js-copy.js'),
   browserify: require(CONFIG_PATH + 'browserify.js'),
+  autoprefixer: require(CONFIG_PATH + 'autoprefixer.js'),
 };
 
 if (gutil.env.port) PORT = gutil.env.port;
@@ -108,10 +109,7 @@ gulp.task('compass',function(){
       css: DEST_CSS,
       sass: SRC_SASS,
     }))
-    .pipe(autoprefixer({
-      browsers: ['last 2 versions'],
-      cascade: false, // インデント
-    }))
+    .pipe(autoprefixer(config.autoprefixer))
     .pipe(gulpif(!gutil.env.develop, minifyCss({ advanced: false }))) // developモードではminifyしない
     .pipe(gulp.dest(DEST_CSS));
 });
