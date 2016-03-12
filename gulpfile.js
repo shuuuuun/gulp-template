@@ -9,18 +9,17 @@ var DEST_HTML = DEST_PATH;
 var DEST_CSS = DEST_PATH + 'css/';
 var DEST_JS = DEST_PATH + 'js/';
 var SRC_JADE = SRC_PATH + 'jade/';
-var SRC_SASS = SRC_PATH + 'sass/';
+var SRC_STYLUS = SRC_PATH + 'stylus/';
 var SRC_JS = SRC_PATH + 'js/';
 var GLOB_UNBUILD = '!' + SRC_PATH + '**/_**';
 var GLOB_JADE = SRC_JADE + '**/*.jade';
-var GLOB_SASS = SRC_SASS + '**/*.sass';
-var GLOB_SCSS = SRC_SASS + '**/*.scss';
+var GLOB_STYLUS = SRC_STYLUS + '**/*.styl';
+var GLOB_CSS = SRC_STYLUS + '**/*.css';
 var GLOB_JS = SRC_JS + '**/*.js';
 var GLOB_CONFIG = CONFIG_PATH + '**/*';
 
 var gulp = require('gulp');
 var plumber = require('gulp-plumber');
-var sass = require('gulp-sass');
 var jade = require('gulp-jade');
 var watch = require('gulp-watch');
 var webserver = require('gulp-webserver');
@@ -30,9 +29,9 @@ var rename = require('gulp-rename');
 var browserify = require('browserify');
 var source = require('vinyl-source-stream');
 var babelify = require('babelify');
-var minifyCss = require('gulp-minify-css');
 var gulpif = require('gulp-if');
 var gulpIgnore = require('gulp-ignore');
+var stylus = require('gulp-stylus');
 
 var config = {
   site: require(CONFIG_PATH + 'site.js'),
@@ -51,7 +50,7 @@ if (gutil.env.port) PORT = gutil.env.port;
 gulp.task('default',['build', 'server', 'watch']);
 gulp.task('build', ['html', 'css', 'js']);
 gulp.task('html', ['jade']);
-gulp.task('css', ['sass']);
+gulp.task('css', ['stylus']);
 gulp.task('js', ['browserify', 'js-copy']);
 
 gulp.task('watch',function(){
@@ -62,8 +61,8 @@ gulp.task('watch',function(){
   watch(GLOB_JS,function(){
     gulp.start('js');
   });
-  watch([GLOB_SASS, GLOB_SCSS],function(){
-    gulp.start('sass');
+  watch([GLOB_STYLUS, GLOB_CSS],function(){
+    gulp.start('stylus');
   });
 });
 
@@ -98,13 +97,12 @@ gulp.task('jade',function(){
     .pipe(gulp.dest(DEST_HTML));
 });
 
-gulp.task('sass',function(){
-  gulp.src([GLOB_SASS, GLOB_SCSS, GLOB_UNBUILD])
+gulp.task('stylus', function () {
+  gulp.src([GLOB_STYLUS, GLOB_CSS, GLOB_UNBUILD])
     .pipe(plumber())
-    .pipe(sass({
-      includePaths: require('node-reset-scss').includePath
+    .pipe(stylus({
+      compress: true
     }))
-    .pipe(gulpif(!gutil.env.develop, minifyCss({ advanced: false }))) // developモードではminifyしない
     .pipe(gulp.dest(DEST_CSS));
 });
 
