@@ -101,7 +101,9 @@ gulp.task('jade',function(){
 gulp.task('sass',function(){
   gulp.src([GLOB_SASS, GLOB_SCSS, GLOB_UNBUILD])
     .pipe(plumber())
-    .pipe(sass())
+    .pipe(sass({
+      includePaths: require('node-reset-scss').includePath
+    }))
     .pipe(gulpif(!gutil.env.develop, minifyCss({ advanced: false }))) // developモードではminifyしない
     .pipe(gulp.dest(DEST_CSS));
 });
