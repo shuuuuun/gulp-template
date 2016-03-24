@@ -1,18 +1,19 @@
 @charset "UTF-8";
 
 // mixin --------------------------------------------------
-@mixin mq-sp {
+@mixin is-sp {
   @media (max-width: $breakpoint) {
     @content;
   }
 }
 
-@mixin mq-pc {
+@mixin is-pc {
   @media (min-width: $breakpoint) {
     @content;
   }
 }
 
+/* 
 @mixin is-sp {
   .isSP {
     @content;
@@ -24,6 +25,7 @@
     @content;
   }
 }
+ */
 
 @mixin absolute($top,$right,$bottom,$left) {
     position: absolute;
