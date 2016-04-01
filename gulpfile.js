@@ -90,12 +90,24 @@ gulp.task('jade',function(){
       pretty: true
     }))
     .pipe(rename(function(path){
-      if (!!path.basename.match(/^_/)) { // ex. _hoge.jade -> hoge.html
-        path.basename = path.basename.replace(/^_/, '');
+      if (path.basename === 'index') {
         return;
       }
-      if (path.basename != 'index') { // ex. hoge.jade -> hoge/index.html
-        path.dirname += '/' + path.basename.replace(/__/, '/'); // ex. hoge__fuga -> hoge/fuga
+      if (!!path.basename.match(/^_/)) {
+        // ex. _hoge.jade -> hoge.html
+        // ex. _hoge__fuga.jade -> hoge/fuga.html
+        path.basename = path.basename.replace(/^_/, '');
+        
+        var ary = path.basename.split('__');
+        var base = ary.pop();
+        var dir = ary.join('/');
+        path.dirname += '/' + dir;
+        path.basename = base;
+      }
+      else {
+        // ex. hoge.jade -> hoge/index.html
+        // ex. hoge__fuga.jade -> hoge/fuga/index.html
+        path.dirname += '/' + path.basename.replace(/__/, '/');
         path.basename = 'index';
       }
     }))
