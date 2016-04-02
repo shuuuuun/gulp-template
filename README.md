@@ -8,4 +8,6 @@
 - version/browserify
 - version/babelify(ES2015)
 
-concatとbabelifyがメインになっていきそう
+最近はbabelifyがメイン
+
+masterはあまり更新してないので他のブランチを見ましょう
