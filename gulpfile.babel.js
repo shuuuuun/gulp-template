@@ -1,50 +1,52 @@
-var PORT = '5353';
-var FALLBACK = '404.html';
+'use strict';
 
-var HTTP_PATH = './public/';
-var DEST_PATH = './public/';
-var SRC_PATH = './src/';
-var CONFIG_PATH = './config/';
-var DEST_HTML = DEST_PATH;
-var DEST_CSS = DEST_PATH + 'css/';
-var DEST_JS = DEST_PATH + 'js/';
-var SRC_JADE = SRC_PATH + 'jade/';
-var SRC_SASS = SRC_PATH + 'sass/';
-var SRC_JS = SRC_PATH + 'js/';
-var GLOB_UNBUILD = '!' + SRC_PATH + '**/_**';
-var GLOB_JADE = SRC_JADE + '**/*.jade';
-var GLOB_SASS = SRC_SASS + '**/*.sass';
-var GLOB_SCSS = SRC_SASS + '**/*.scss';
-var GLOB_JS = SRC_JS + '**/*.js';
-var GLOB_CONFIG = CONFIG_PATH + '**/*';
-var COMPASS_CONFIG_PATH = CONFIG_PATH + 'compass.rb';
+// const
+const PORT = '5353';
+const FALLBACK = '404.html';
 
-var gulp = require('gulp');
-var plumber = require('gulp-plumber');
-var compass = require('gulp-compass');
-var jade = require('gulp-jade');
-var watch = require('gulp-watch');
-var webserver = require('gulp-webserver');
-var uglify = require('gulp-uglify');
-var gutil = require('gulp-util');
-var rename = require('gulp-rename');
-var browserify = require('browserify');
-var source = require('vinyl-source-stream');
-var babelify = require('babelify');
-var minifyCss = require('gulp-minify-css');
-var gulpif = require('gulp-if');
-var gulpIgnore = require('gulp-ignore');
-var notify = require('gulp-notify');
-var autoprefixer = require('gulp-autoprefixer');
+const HTTP_PATH = './public/';
+const DEST_PATH = './public/';
+const SRC_PATH = './src/';
+const CONFIG_PATH = './config/';
+const DEST_HTML = DEST_PATH;
+const DEST_CSS = `${DEST_PATH}css/`;
+const DEST_JS = `${DEST_PATH}js/`;
+const SRC_JADE = `${SRC_PATH}jade/`;
+const SRC_SASS = `${SRC_PATH}sass/`;
+const SRC_JS = `${SRC_PATH}js/`;
+const GLOB_UNBUILD = '!' + `${SRC_PATH}**/_**`;
+const GLOB_JADE = `${SRC_JADE}**/*.jade`;
+const GLOB_SASS = `${SRC_SASS}**/*.sass`;
+const GLOB_SCSS = `${SRC_SASS}**/*.scss`;
+const GLOB_JS = `${SRC_JS}**/*.js`;
+const GLOB_CONFIG = `${CONFIG_PATH}**/*`;
+const COMPASS_CONFIG_PATH = `${CONFIG_PATH}compass.rb`;
 
-var config = {
-  site: require(CONFIG_PATH + 'site.js'),
-  jsCopy: require(CONFIG_PATH + 'js-copy.js'),
-  browserify: require(CONFIG_PATH + 'browserify.js'),
-  autoprefixer: require(CONFIG_PATH + 'autoprefixer.js'),
+const config = {
+  site: require(`${CONFIG_PATH}site.js`),
+  jsCopy: require(`${CONFIG_PATH}js-copy.js`),
+  browserify: require(`${CONFIG_PATH}browserify.js`),
+  autoprefixer: require(`${CONFIG_PATH}autoprefixer.js`),
 };
 
-if (gutil.env.port) PORT = gutil.env.port;
+// import
+import gulp from 'gulp';
+import plumber from 'gulp-plumber';
+import compass from 'gulp-compass';
+import jade from 'gulp-jade';
+import watch from 'gulp-watch';
+import webserver from 'gulp-webserver';
+import uglify from 'gulp-uglify';
+import gutil from 'gulp-util';
+import rename from 'gulp-rename';
+import browserify from 'browserify';
+import source from 'vinyl-source-stream';
+import babelify from 'babelify';
+import minifyCss from 'gulp-minify-css';
+import gulpif from 'gulp-if';
+import gulpIgnore from 'gulp-ignore';
+import notify from 'gulp-notify';
+import autoprefixer from 'gulp-autoprefixer';
 
 
 // $ gulp --develop でjs,cssをminifyしない
@@ -58,38 +60,38 @@ gulp.task('html', ['jade']);
 gulp.task('css', ['compass']);
 gulp.task('js', ['browserify', 'js-copy']);
 
-gulp.task('watch',function(){
+gulp.task('watch', () => {
   // gulp.watch(['./src/jade/*.jade','./src/jade/**/*.jade','./src/jade/**/_*.jade'],['jade']);
-  watch(GLOB_JADE,function(){
+  watch(GLOB_JADE, () => {
     gulp.start('jade');
   });
-  watch(GLOB_JS,function(){
+  watch(GLOB_JS, () => {
     gulp.start('js');
   });
-  watch([GLOB_SASS, GLOB_SCSS],function(){
+  watch([GLOB_SASS, GLOB_SCSS], () => {
     gulp.start('compass');
   });
 });
 
-gulp.task('server',function(){
+gulp.task('server', () => {
   gulp.src(HTTP_PATH)
     .pipe(webserver({
       // directoryListing: true,
       host: '0.0.0.0',
-      port: PORT,
+      port: (gutil.env.port || PORT),
       fallback: FALLBACK,
     })
   );
 });
 
-gulp.task('jade',function(){
+gulp.task('jade', () => {
   gulp.src([GLOB_JADE, GLOB_UNBUILD])
     .pipe(plumber({ errorHandler: notify.onError('<%= error.message %>') }))
     .pipe(jade({
       locals: config.site,
       pretty: true
     }))
-    .pipe(rename(function(path){
+    .pipe(rename((path) => {
       if (path.basename === 'index') {
         return;
       }
@@ -98,9 +100,9 @@ gulp.task('jade',function(){
         // ex. _hoge__fuga.jade -> hoge/fuga.html
         path.basename = path.basename.replace(/^_/, '');
         
-        var ary = path.basename.split('__');
-        var base = ary.pop();
-        var dir = ary.join('/');
+        let ary = path.basename.split('__');
+        let base = ary.pop();
+        let dir = ary.join('/');
         path.dirname += '/' + dir;
         path.basename = base;
       }
@@ -114,7 +116,7 @@ gulp.task('jade',function(){
     .pipe(gulp.dest(DEST_HTML));
 });
 
-gulp.task('compass',function(){
+gulp.task('compass', () => {
   gulp.src([GLOB_SASS, GLOB_SCSS, GLOB_UNBUILD])
     .pipe(plumber({ errorHandler: notify.onError('<%= error.message %>') }))
     .pipe(compass({
@@ -127,14 +129,14 @@ gulp.task('compass',function(){
     .pipe(gulp.dest(DEST_CSS));
 });
 
-gulp.task('js-copy',function(){
+gulp.task('js-copy', () => {
   gulp.src(config.jsCopy.files)
     .pipe(plumber({ errorHandler: notify.onError('<%= error.message %>') }))
     .pipe(gulpif(!gutil.env.develop, uglify({preserveComments: 'some'}))) // developモードではminifyしない
     .pipe(gulp.dest(DEST_JS));
 });
 
-gulp.task('browserify',function(){
+gulp.task('browserify', () => {
   browserify({
     entries: config.browserify.entries,
   })
