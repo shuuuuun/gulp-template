@@ -29,6 +29,7 @@ const config = {
   autoprefixer: require(`${CONFIG_PATH}autoprefixer.js`),
 };
 
+
 // import
 import gulp from 'gulp';
 import plumber from 'gulp-plumber';
@@ -47,10 +48,6 @@ import gulpif from 'gulp-if';
 import gulpIgnore from 'gulp-ignore';
 import notify from 'gulp-notify';
 import autoprefixer from 'gulp-autoprefixer';
-
-
-// $ gulp --develop でjs,cssをminifyしない
-// $ gulp --port 0000 でport指定
 
 
 // tasks
