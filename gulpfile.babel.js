@@ -90,25 +90,20 @@ gulp.task('jade', () => {
       pretty: true
     }))
     .pipe(rename((path) => {
-      if (path.basename === 'index') {
-        return;
+      // ex. hoge.jade -> hoge.html
+      // ex. hoge__.jade -> hoge/index.html
+      // ex. hoge__fuga.jade -> hoge/fuga.html
+      // ex. hoge__fuga__.jade -> hoge/fuga/index.html
+      if (!!path.basename.match(/__$/)) {
+        path.dirname += '/' + path.basename.replace(/__/g, '/');
+        path.basename = 'index';
       }
-      if (!!path.basename.match(/^_/)) {
-        // ex. _hoge.jade -> hoge.html
-        // ex. _hoge__fuga.jade -> hoge/fuga.html
-        path.basename = path.basename.replace(/^_/, '');
-        
+      else {
         let ary = path.basename.split('__');
         let base = ary.pop();
         let dir = ary.join('/');
         path.dirname += '/' + dir;
         path.basename = base;
-      }
-      else {
-        // ex. hoge.jade -> hoge/index.html
-        // ex. hoge__fuga.jade -> hoge/fuga/index.html
-        path.dirname += '/' + path.basename.replace(/__/, '/');
-        path.basename = 'index';
       }
     }))
     .pipe(gulp.dest(DEST_HTML));
