@@ -137,7 +137,7 @@ gulp.task('browserify', () => {
   browserify({
     entries: config.browserify.entries,
   })
-  .transform(babelify, { presets: ['es2015'] })
+  .transform(babelify)
   .bundle()
   .on('error', notify.onError('<%= error.message %>'))
   .pipe(source(config.browserify.dest))
