@@ -42,6 +42,7 @@ import gutil from 'gulp-util';
 import rename from 'gulp-rename';
 import browserify from 'browserify';
 import source from 'vinyl-source-stream';
+import buffer from 'vinyl-buffer';
 import babelify from 'babelify';
 import minifyCss from 'gulp-minify-css';
 import gulpif from 'gulp-if';
@@ -129,7 +130,7 @@ gulp.task('compass', () => {
 gulp.task('js-copy', () => {
   gulp.src(config.jsCopy.files)
     .pipe(plumber({ errorHandler: notify.onError('<%= error.message %>') }))
-    .pipe(gulpif(!gutil.env.develop, uglify({preserveComments: 'some'}))) // developモードではminifyしない
+    .pipe(gulpif(!gutil.env.develop, uglify({ preserveComments: 'some' }))) // developモードではminifyしない
     .pipe(gulp.dest(DEST_JS));
 });
 
@@ -141,5 +142,7 @@ gulp.task('browserify', () => {
   .bundle()
   .on('error', notify.onError('<%= error.message %>'))
   .pipe(source(config.browserify.dest))
+  .pipe(buffer())
+  .pipe(gulpif(!gutil.env.develop, uglify({ preserveComments: 'some' }))) // developモードではminifyしない
   .pipe(gulp.dest(DEST_JS));
 });
