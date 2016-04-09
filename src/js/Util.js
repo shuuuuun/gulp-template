@@ -86,8 +86,15 @@ const Util = {
     Util.ua.isPC = !Util.ua.isSP;
     Util.ua.isIOS = /ipod|iphone|ipad/i.test(Util.ua.name);
     Util.ua.isAndroid = /android/.test(Util.ua.name);
+    Util.ua.isIE = /msie|trident/i.test(Util.ua.name);
     Util.ua.isIE8 = /msie 8/.test(Util.ua.name);
     Util.ua.isIE9 = /msie 9/.test(Util.ua.name);
+    Util.ua.isIE10 = /msie 10/.test(Util.ua.name);
+    Util.ua.isMac = /macintosh/.test(Util.ua.name);
+    Util.ua.isChrome = /chrome/.test(Util.ua.name);
+    Util.ua.isFirefox = /firefox/.test(Util.ua.name);
+    Util.ua.isSafari = /safari/.test(Util.ua.name);
+    Util.ua.isMacSafari = Util.ua.isSafari && Util.ua.isMac && !Util.ua.isChrome; // chromeのuaにもsafariの文字列がある
     if (Util.ua.isSP) document.body.className += " isSP";
     if (Util.ua.isPC) document.body.className += " isPC";
     return Util.ua;
@@ -99,6 +106,22 @@ const Util = {
     else {
       $('.onlysp').remove();
     }
+  },
+  setupInternalLinks: function(){
+    $('a[href^="#"]').on('click', function(){
+      var scrTop = document.documentElement.scrollTop || document.body.scrollTop || $win.scrollTop();
+      var speed = 2;
+      var anchor = $(this).attr('href');
+      var target = (anchor === '#top') ? 0 : $(anchor).offset().top;
+      var distance = Math.abs(scrTop - target);
+      var time = distance / speed;
+      
+      $('html, body').animate({
+          scrollTop: target,
+      }, time, 'swing');
+      
+      return false;
+    });
   },
 };
 
