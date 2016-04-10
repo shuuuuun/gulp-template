@@ -1,26 +1,19 @@
 @charset "UTF-8"
 
 // common ------------------------------
-.onlysp
-  display: none
-  
-  +is-sp
++is-pc
+  .onlypc
     display: initial
-
-.onlypc
-  display: initial
-  
-  +is-sp
-    display: none
-
-.isSP
   .onlysp
-    display: initial
+    display: none
   
++is-sp
   .onlypc
     display: none
+  .onlysp
+    display: initial
 
-.hidden
+.is-hidden
   display: none !important
 
 
