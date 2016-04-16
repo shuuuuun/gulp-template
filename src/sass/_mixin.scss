@@ -1,11 +1,31 @@
 @charset "UTF-8";
 
 // mixin --------------------------------------------------
-@mixin sp {
+@mixin is-sp {
   @media (max-width: $breakpoint) {
     @content;
   }
 }
+
+@mixin is-pc {
+  @media (min-width: $breakpoint) {
+    @content;
+  }
+}
+
+/* 
+@mixin is-sp {
+  .isSP {
+    @content;
+  }
+}
+
+@mixin is-pc {
+  .isPC {
+    @content;
+  }
+}
+ */
 
 @mixin absolute($top,$right,$bottom,$left) {
     position: absolute;
@@ -73,29 +93,29 @@
     }
 }
 
-@mixin sprite-button($url,$spritenum:2) {
+@mixin sprite-button($url) {
     $height: image-height($url);
 
     height: $height / 2;
     a, button {
         height: $height / 2;
+        cursor: pointer;
     }
     &:hover, a:hover, button:hover {
         background-position: center bottom;
-        cursor: pointer;
     }
 }
 
-@mixin sprite-button-retina($url,$spritenum:2) {
+@mixin sprite-button-retina($url) {
     $height: image-height($url);
 
     height: $height / 2 / 2;
     a, button {
         height: $height / 2 / 2;
+        cursor: pointer;
     }
     &:hover, a:hover, button:hover, &.hover, a.hover, button.hover {
         background-position: center bottom;
-        cursor: pointer;
     }
 }
 

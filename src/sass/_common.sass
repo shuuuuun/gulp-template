@@ -1,32 +1,25 @@
 @charset "UTF-8"
 
 // common ------------------------------
-.onlysp
-  display: none
-  
-  +sp
++is-pc
+  .onlypc
     display: initial
-
-.onlypc
-  display: initial
-  
-  +sp
-    display: none
-
-.isSP
   .onlysp
-    display: initial
+    display: none
   
++is-sp
   .onlypc
     display: none
+  .onlysp
+    display: initial
 
-.hidden
+.is-hidden
   display: none !important
 
 
 // element ------------------------------
 html, body
-  font-family: $MAIN_FONT
+  font-family: $font_gothic
   font-size: 10px
 
 body *
