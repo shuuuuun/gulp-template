@@ -43,6 +43,7 @@ var concat = require('gulp-concat');
 var minifyCss = require('gulp-minify-css');
 var gulpif = require('gulp-if');
 var gulpIgnore = require('gulp-ignore');
+var notify = require('gulp-notify');
 var autoprefixer = require('gulp-autoprefixer');
 
 
@@ -79,7 +80,7 @@ gulp.task('server',function(){
 
 gulp.task('jade',function(){
   gulp.src([GLOB_JADE, GLOB_UNBUILD])
-    .pipe(plumber())
+    .pipe(plumber({ errorHandler: notify.onError('<%= error.message %>') }))
     .pipe(jade({
       locals: config.site,
       pretty: true
@@ -106,7 +107,7 @@ gulp.task('jade',function(){
 
 gulp.task('compass',function(){
   gulp.src([GLOB_SASS, GLOB_SCSS, GLOB_UNBUILD])
-    .pipe(plumber())
+    .pipe(plumber({ errorHandler: notify.onError('<%= error.message %>') }))
     .pipe(compass({
       config_file: COMPASS_CONFIG_PATH,
       css: DEST_CSS,
@@ -119,7 +120,7 @@ gulp.task('compass',function(){
 
 gulp.task('js-copy',function(){
   gulp.src([GLOB_JS, GLOB_UNBUILD])
-    .pipe(plumber())
+    .pipe(plumber({ errorHandler: notify.onError('<%= error.message %>') }))
     .pipe(gulpIgnore.exclude(function(file){ // concatconfigにあるファイルは除く
       return config.concat.files.some(function(val){
         return (file.path.indexOf(val) >= 0);
@@ -131,7 +132,7 @@ gulp.task('js-copy',function(){
 
 gulp.task('js-concat',function(){
   gulp.src(config.concat.files)
-    .pipe(plumber())
+    .pipe(plumber({ errorHandler: notify.onError('<%= error.message %>') }))
     .pipe(concat(config.concat.dest))
     .pipe(gulpif(!gutil.env.develop, uglify({preserveComments: 'some'}))) // developモードではminifyしない
     .pipe(gulp.dest(DEST_JS));
