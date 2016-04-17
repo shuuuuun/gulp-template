@@ -1,3 +1,6 @@
+'use strict';
+
+// const
 var PORT = '5353';
 var FALLBACK = '404.html';
 
@@ -19,6 +22,14 @@ var GLOB_JS = SRC_JS + '**/*.js';
 var GLOB_CONFIG = CONFIG_PATH + '**/*';
 var COMPASS_CONFIG_PATH = CONFIG_PATH + 'compass.rb';
 
+var config = {
+  concat: require(CONFIG_PATH + 'concat.js'),
+  site: require(CONFIG_PATH + 'site.js'),
+  autoprefixer: require(CONFIG_PATH + 'autoprefixer.js'),
+};
+
+
+// import
 var gulp = require('gulp');
 var plumber = require('gulp-plumber');
 var compass = require('gulp-compass');
@@ -33,18 +44,6 @@ var minifyCss = require('gulp-minify-css');
 var gulpif = require('gulp-if');
 var gulpIgnore = require('gulp-ignore');
 var autoprefixer = require('gulp-autoprefixer');
-
-var config = {
-  concat: require(CONFIG_PATH + 'concat.js'),
-  site: require(CONFIG_PATH + 'site.js'),
-  autoprefixer: require(CONFIG_PATH + 'autoprefixer.js'),
-};
-
-if (gutil.env.port) PORT = gutil.env.port;
-
-
-// $ gulp --develop でjs,cssをminifyしない
-// $ gulp --port 0000 でport指定
 
 
 // tasks
@@ -72,7 +71,7 @@ gulp.task('server',function(){
     .pipe(webserver({
       // directoryListing: true,
       host: '0.0.0.0',
-      port: PORT,
+      port: (gutil.env.port || PORT),
       fallback: FALLBACK,
     })
   );
@@ -85,14 +84,21 @@ gulp.task('jade',function(){
       locals: config.site,
       pretty: true
     }))
-    .pipe(rename(function(path){
-      if (!!path.basename.match(/^_/)) { // ex. _hoge.jade -> hoge.html
-        path.basename = path.basename.replace(/^_/, '');
-        return;
-      }
-      if (path.basename != 'index') { // ex. hoge.jade -> hoge/index.html
-        path.dirname += '/' + path.basename.replace(/__/, '/'); // ex. hoge__fuga -> hoge/fuga
+    .pipe(rename((path) => {
+      // ex. hoge.jade -> hoge.html
+      // ex. hoge__.jade -> hoge/index.html
+      // ex. hoge__fuga.jade -> hoge/fuga.html
+      // ex. hoge__fuga__.jade -> hoge/fuga/index.html
+      if (!!path.basename.match(/__$/)) {
+        path.dirname += '/' + path.basename.replace(/__/g, '/');
         path.basename = 'index';
+      }
+      else {
+        let ary = path.basename.split('__');
+        let base = ary.pop();
+        let dir = ary.join('/');
+        path.dirname += '/' + dir;
+        path.basename = base;
       }
     }))
     .pipe(gulp.dest(DEST_HTML));
