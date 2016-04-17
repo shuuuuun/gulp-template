@@ -32,10 +32,12 @@ var concat = require('gulp-concat');
 var minifyCss = require('gulp-minify-css');
 var gulpif = require('gulp-if');
 var gulpIgnore = require('gulp-ignore');
+var autoprefixer = require('gulp-autoprefixer');
 
 var config = {
   concat: require(CONFIG_PATH + 'concat.js'),
   site: require(CONFIG_PATH + 'site.js'),
+  autoprefixer: require(CONFIG_PATH + 'autoprefixer.js'),
 };
 
 if (gutil.env.port) PORT = gutil.env.port;
@@ -104,6 +106,7 @@ gulp.task('compass',function(){
       css: DEST_CSS,
       sass: SRC_SASS,
     }))
+    .pipe(autoprefixer(config.autoprefixer))
     .pipe(gulpif(!gutil.env.develop, minifyCss({ advanced: false }))) // developモードではminifyしない
     .pipe(gulp.dest(DEST_CSS));
 });
