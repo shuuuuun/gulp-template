@@ -27,6 +27,7 @@ const config = {
   jsCopy: require(`${CONFIG_PATH}js-copy.js`),
   browserify: require(`${CONFIG_PATH}browserify.js`),
   pleeease: require(`${CONFIG_PATH}pleeease.js`),
+  eslintrcPath: `${CONFIG_PATH}eslintrc.json`,
 };
 
 
@@ -48,6 +49,7 @@ import babelify from 'babelify';
 import gulpif from 'gulp-if';
 import gulpIgnore from 'gulp-ignore';
 import notify from 'gulp-notify';
+import eslint from 'gulp-eslint';
 
 
 // tasks
@@ -55,7 +57,7 @@ gulp.task('default',['build', 'server', 'watch']);
 gulp.task('build', ['html', 'css', 'js']);
 gulp.task('html', ['jade']);
 gulp.task('css', ['compass']);
-gulp.task('js', ['browserify', 'js-copy']);
+gulp.task('js', ['lint', 'browserify', 'js-copy']);
 
 gulp.task('watch', () => {
   // gulp.watch(['./src/jade/*.jade','./src/jade/**/*.jade','./src/jade/**/_*.jade'],['jade']);
@@ -139,4 +141,16 @@ gulp.task('browserify', () => {
   .pipe(buffer())
   .pipe(gulpif(!gutil.env.develop, uglify({ preserveComments: 'some' }))) // developモードではminifyしない
   .pipe(gulp.dest(DEST_JS));
+});
+
+gulp.task('lint', () => {
+  gulp.src([GLOB_JS, GLOB_UNBUILD])
+    .pipe(eslint(config.eslintrcPath))
+    .pipe(eslint.format())
+    .pipe(eslint.results((results) => {
+      // Called once for all ESLint results.
+      console.log('Total Results: ' + results.length);
+      console.log('Total Warnings: ' + results.warningCount);
+      console.log('Total Errors: ' + results.errorCount);
+    }));
 });
