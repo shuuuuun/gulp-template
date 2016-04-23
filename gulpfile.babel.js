@@ -119,7 +119,8 @@ gulp.task('compass', () => {
     }))
     .pipe(autoprefixer(config.autoprefixer))
     .pipe(gulpif(!gutil.env.develop, minifyCss({ advanced: false }))) // developモードではminifyしない
-    .pipe(gulp.dest(DEST_CSS));
+    .pipe(gulp.dest(DEST_CSS))
+    .pipe(notify('compass build succeeded!!'));
 });
 
 gulp.task('js-copy', () => {
