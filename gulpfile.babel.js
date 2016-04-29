@@ -145,12 +145,8 @@ gulp.task('browserify', () => {
 
 gulp.task('lint', () => {
   gulp.src([GLOB_JS, GLOB_UNBUILD])
+    .pipe(plumber({ errorHandler: notify.onError('<%= error.message %>') }))
     .pipe(eslint(config.eslintrcPath))
     .pipe(eslint.format())
-    .pipe(eslint.results((results) => {
-      // Called once for all ESLint results.
-      console.log('Total Results: ' + results.length);
-      console.log('Total Warnings: ' + results.warningCount);
-      console.log('Total Errors: ' + results.errorCount);
-    }));
+    .pipe(eslint.failAfterError());
 });
