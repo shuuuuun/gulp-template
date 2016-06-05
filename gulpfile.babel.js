@@ -4,9 +4,9 @@
 const PORT = '5353';
 const FALLBACK = '404.html';
 
-const HTTP_PATH = './public/';
-const DEST_PATH = './public/';
-const SRC_PATH = './src/';
+const HTTP_PATH = 'public/';
+const DEST_PATH = 'public/';
+const SRC_PATH = 'src/';
 const CONFIG_PATH = './config/';
 const DEST_HTML = DEST_PATH;
 const DEST_CSS = `${DEST_PATH}css/`;
@@ -37,7 +37,7 @@ import plumber from 'gulp-plumber';
 import compass from 'gulp-compass';
 import pleeease from 'gulp-pleeease';
 import jade from 'gulp-jade';
-import watch from 'gulp-watch';
+// import watch from 'gulp-watch';
 import webserver from 'gulp-webserver';
 import uglify from 'gulp-uglify';
 import gutil from 'gulp-util';
@@ -60,16 +60,18 @@ gulp.task('css', ['compass']);
 gulp.task('js', ['lint', 'browserify', 'js-copy']);
 
 gulp.task('watch', () => {
-  // gulp.watch(['./src/jade/*.jade','./src/jade/**/*.jade','./src/jade/**/_*.jade'],['jade']);
-  watch(GLOB_JADE, () => {
-    gulp.start('jade');
-  });
-  watch(GLOB_JS, () => {
-    gulp.start('js');
-  });
-  watch([GLOB_SASS, GLOB_SCSS], () => {
-    gulp.start('compass');
-  });
+  gulp.watch(GLOB_JADE, ['jade']);
+  gulp.watch(GLOB_JS, ['js']);
+  gulp.watch([GLOB_SASS, GLOB_SCSS], ['compass']);
+  // watch(GLOB_JADE, () => {
+  //   gulp.start('jade');
+  // });
+  // watch(GLOB_JS, () => {
+  //   gulp.start('js');
+  // });
+  // watch([GLOB_SASS, GLOB_SCSS], () => {
+  //   gulp.start('compass');
+  // });
 });
 
 gulp.task('server', () => {
@@ -111,6 +113,7 @@ gulp.task('jade', () => {
 });
 
 gulp.task('compass', () => {
+  console.log('compasssssssss');
   gulp.src([GLOB_SASS, GLOB_SCSS, GLOB_UNBUILD])
     .pipe(plumber({ errorHandler: notify.onError('<%= error.message %>') }))
     .pipe(compass({
