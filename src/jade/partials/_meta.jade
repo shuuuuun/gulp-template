@@ -11,6 +11,10 @@ if meta_keywords
 //- IEで「互換モード」で表示されるのを防ぐための指定
 meta(http-equiv="X-UA-Compatible", content="IE=Edge")
 
+if url
+  //- このページをはてぶ・シェアする際、使われるべきURLを明示する指定
+  link(rel="canonical" href=url)
+
 if og_description
   meta(property="og:locale" content="ja_JP")
   meta(property="og:type" content="website")
