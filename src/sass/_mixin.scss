@@ -13,29 +13,7 @@
   }
 }
 
-/* 
-@mixin is-sp {
-  .isSP {
-    @content;
-  }
-}
-
-@mixin is-pc {
-  .isPC {
-    @content;
-  }
-}
- */
-
-@mixin absolute($top,$right,$bottom,$left) {
-    position: absolute;
-    top: $top;
-    bottom: $bottom;
-    left: $left;
-    right: $right;
-}
-
-@mixin absolute-center() {
+@mixin absolute-center {
     margin: auto;
     position: absolute;
     top: 0;
@@ -44,7 +22,25 @@
     right: 0;
 }
 
-@mixin clearfix() {
+@mixin absolute($top, $right, $bottom, $left) {
+    position: absolute;
+    
+    @if $top    != '' { top: $top; }
+    @if $bottom != '' { bottom: $bottom; }
+    @if $left   != '' { left: $left; }
+    @if $right  != '' { right: $right; }
+}
+
+@mixin fixed($top, $right, $bottom, $left) {
+    position: fixed;
+    
+    @if $top    != '' { top: $top; }
+    @if $bottom != '' { bottom: $bottom; }
+    @if $left   != '' { left: $left; }
+    @if $right  != '' { right: $right; }
+}
+
+@mixin clearfix {
     &:before,
     &:after {
         content : '';
@@ -55,6 +51,9 @@
 }
 
 @mixin placeholder {
+    &::placeholder {
+        @content;
+    }
     &::-webkit-input-placeholder {
         @content;
     }
@@ -81,15 +80,49 @@
     border: none;
     outline: none;
     background: none;
+    appearance: none;
     padding: 0;
     cursor: pointer;
     font: inherit;
     color: inherit;
 }
 
+@mixin reset-anchor-style {
+    a {
+        color: inherit;
+        text-decoration: none;
+    }
+}
+
 @mixin anchor-state {
     a, a:link, a:visited, a:hover, a:active {
         @content;
+    }
+}
+
+@mixin text-link {
+    color: inherit;
+    text-decoration: none;
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+@mixin opacity-hover {
+    &:hover {
+        opacity: 0.7;
+    }
+}
+
+@mixin hide-text {
+    text-indent: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+@mixin hide-span-text {
+    span {
+        display: none;
     }
 }
 
