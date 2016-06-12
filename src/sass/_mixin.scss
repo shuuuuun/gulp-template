@@ -87,6 +87,13 @@
     color: inherit;
 }
 
+@mixin reset-anchor-style {
+    a {
+        color: inherit;
+        text-decoration: none;
+    }
+}
+
 @mixin anchor-state {
     a, a:link, a:visited, a:hover, a:active {
         @content;
