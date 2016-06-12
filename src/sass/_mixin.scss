@@ -21,7 +21,7 @@
     right: $right;
 }
 
-@mixin absolute-center() {
+@mixin absolute-center {
     margin: auto;
     position: absolute;
     top: 0;
@@ -30,7 +30,7 @@
     right: 0;
 }
 
-@mixin clearfix() {
+@mixin clearfix {
     &:before,
     &:after {
         content : '';
