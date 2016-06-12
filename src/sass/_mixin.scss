@@ -13,20 +13,6 @@
   }
 }
 
-/* 
-@mixin is-sp {
-  .isSP {
-    @content;
-  }
-}
-
-@mixin is-pc {
-  .isPC {
-    @content;
-  }
-}
- */
-
 @mixin absolute($top,$right,$bottom,$left) {
     position: absolute;
     top: $top;
