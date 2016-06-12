@@ -13,14 +13,6 @@
   }
 }
 
-@mixin absolute($top,$right,$bottom,$left) {
-    position: absolute;
-    top: $top;
-    bottom: $bottom;
-    left: $left;
-    right: $right;
-}
-
 @mixin absolute-center {
     margin: auto;
     position: absolute;
@@ -28,6 +20,24 @@
     bottom: 0;
     left: 0;
     right: 0;
+}
+
+@mixin absolute($top, $right, $bottom, $left) {
+    position: absolute;
+    
+    @if $top    != '' { top: $top; }
+    @if $bottom != '' { bottom: $bottom; }
+    @if $left   != '' { left: $left; }
+    @if $right  != '' { right: $right; }
+}
+
+@mixin fixed($top, $right, $bottom, $left) {
+    position: fixed;
+    
+    @if $top    != '' { top: $top; }
+    @if $bottom != '' { bottom: $bottom; }
+    @if $left   != '' { left: $left; }
+    @if $right  != '' { right: $right; }
 }
 
 @mixin clearfix {
