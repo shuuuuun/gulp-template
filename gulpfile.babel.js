@@ -1,7 +1,7 @@
 'use strict';
 
 // const
-const PORT = '5353';
+// const PORT = '5353';
 const FALLBACK = '404.html';
 
 const HTTP_PATH = './public/';
@@ -82,7 +82,7 @@ gulp.task('server', () => {
   //   }));
   new Koko(DEST_PATH, {
     openPath: (gutil.env.open ? '/' : null),
-    staticPort: gutil.env.port,
+    staticPort: (gutil.env.port || PORT || null),
   }).start();
 });
 
