@@ -81,6 +81,7 @@ gulp.task('server', () => {
   //     fallback: FALLBACK,
   //   }));
   new Koko(DEST_PATH, {
+    openPath: (gutil.env.open ? '/' : null),
     staticPort: gutil.env.port,
   }).start();
 });
