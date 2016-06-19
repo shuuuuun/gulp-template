@@ -50,6 +50,7 @@ import gulpif from 'gulp-if';
 import gulpIgnore from 'gulp-ignore';
 import notify from 'gulp-notify';
 import eslint from 'gulp-eslint';
+import Koko from 'koko';
 
 
 // tasks
@@ -72,14 +73,16 @@ gulp.task('watch', () => {
 });
 
 gulp.task('server', () => {
-  gulp.src(HTTP_PATH)
-    .pipe(webserver({
-      // directoryListing: true,
-      host: '0.0.0.0',
-      port: (gutil.env.port || PORT),
-      fallback: FALLBACK,
-    })
-  );
+  // gulp.src(HTTP_PATH)
+  //   .pipe(webserver({
+  //     // directoryListing: true,
+  //     host: '0.0.0.0',
+  //     port: (gutil.env.port || PORT),
+  //     fallback: FALLBACK,
+  //   }));
+  new Koko(DEST_PATH, {
+    staticPort: gutil.env.port,
+  }).start();
 });
 
 gulp.task('pug', () => {
