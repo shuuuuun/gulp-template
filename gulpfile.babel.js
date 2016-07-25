@@ -1,7 +1,7 @@
 'use strict';
 
 // const
-// const PORT = '5353';
+const PORT = null;
 const FALLBACK = '404.html';
 
 const HTTP_PATH = './public/';
@@ -38,7 +38,6 @@ import compass from 'gulp-compass';
 import pleeease from 'gulp-pleeease';
 import pug from 'gulp-pug';
 import watch from 'gulp-watch';
-import webserver from 'gulp-webserver';
 import uglify from 'gulp-uglify';
 import gutil from 'gulp-util';
 import rename from 'gulp-rename';
@@ -73,13 +72,6 @@ gulp.task('watch', () => {
 });
 
 gulp.task('server', () => {
-  // gulp.src(HTTP_PATH)
-  //   .pipe(webserver({
-  //     // directoryListing: true,
-  //     host: '0.0.0.0',
-  //     port: (gutil.env.port || PORT),
-  //     fallback: FALLBACK,
-  //   }));
   new Koko(DEST_PATH, {
     openPath: (gutil.env.open ? '/' : null),
     staticPort: (gutil.env.port || PORT || null),
