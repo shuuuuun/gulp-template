@@ -1,6 +1,6 @@
 module.exports = {
   entries: [
-    'src/js/main.js'
+    '_src/js/main.js'
   ],
   dest: 'script.js'
 };

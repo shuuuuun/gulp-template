@@ -6,7 +6,7 @@ const FALLBACK = '404.html';
 
 const HTTP_PATH = './public/';
 const DEST_PATH = './public/';
-const SRC_PATH = './src/';
+const SRC_PATH = './_src/';
 const CONFIG_PATH = './config/';
 const DEST_HTML = DEST_PATH;
 const DEST_CSS = `${DEST_PATH}css/`;
