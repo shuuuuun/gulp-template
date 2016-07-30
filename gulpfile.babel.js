@@ -69,6 +69,9 @@ gulp.task('watch', () => {
   watch([GLOB_SASS, GLOB_SCSS], () => {
     gulp.start('sass');
   });
+  watch(GLOB_CONFIG, () => {
+    gulp.start('build');
+  });
 });
 
 gulp.task('server', () => {
