@@ -13,9 +13,9 @@
     "no-console": "warn",
     "semi": "warn"
   },
-  "globals": {
-    "jQuery": true,
-    "$": true,
-    "THREE": true
-  }
+  "globals": [
+    "jQuery",
+    "$",
+    "THREE"
+  ]
 }
