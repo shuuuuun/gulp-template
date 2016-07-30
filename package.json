@@ -35,7 +35,7 @@
     "gulp-watch": "^4.3.3",
     "jquery": "^2.2.0",
     "koko": "^0.5.0",
-    "node-reset-scss": "^1.0.1",
+    "reset-css": "^2.0.20160720",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0"
   },

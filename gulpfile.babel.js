@@ -107,9 +107,7 @@ gulp.task('pug', () => {
 gulp.task('sass', () => {
   gulp.src([GLOB_SASS, GLOB_SCSS, GLOB_UNBUILD])
     .pipe(plumber({ errorHandler: notify.onError('<%= error.message %>') }))
-    .pipe(sass({
-      includePaths: require('node-reset-scss').includePath
-    }))
+    .pipe(sass())
     .pipe(pleeease(config.pleeease))
     .pipe(gulp.dest(DEST_CSS))
     .pipe(notify('sass build succeeded!!'));
