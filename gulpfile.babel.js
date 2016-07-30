@@ -21,12 +21,12 @@ const GLOB_SCSS = `${SRC_SASS}**/*.scss`;
 const GLOB_JS = `${SRC_JS}**/*.js`;
 const GLOB_CONFIG = `${CONFIG_PATH}**/*`;
 
-const config = {
-  site: require(`${CONFIG_PATH}site.js`),
-  jsCopy: require(`${CONFIG_PATH}js-copy.js`),
-  browserify: require(`${CONFIG_PATH}browserify.js`),
-  pleeease: require(`${CONFIG_PATH}pleeease.js`),
-  eslintrcPath: `${CONFIG_PATH}eslintrc.json`,
+const CONFIG_PATHS = {
+  site: `${CONFIG_PATH}site.yml`,
+  jsCopy: `${CONFIG_PATH}js-copy.json`,
+  browserify: `${CONFIG_PATH}browserify.json`,
+  pleeease: `${CONFIG_PATH}pleeease.json`,
+  eslintrc: `${CONFIG_PATH}eslintrc.json`,
 };
 
 
@@ -49,6 +49,7 @@ import gulpIgnore from 'gulp-ignore';
 import notify from 'gulp-notify';
 import eslint from 'gulp-eslint';
 import Koko from 'koko';
+import readConfig from 'read-config';
 
 
 // tasks
@@ -68,6 +69,9 @@ gulp.task('watch', () => {
   watch([GLOB_SASS, GLOB_SCSS], () => {
     gulp.start('sass');
   });
+  watch(GLOB_CONFIG, () => {
+    gulp.start('build');
+  });
 });
 
 gulp.task('server', () => {
@@ -78,10 +82,11 @@ gulp.task('server', () => {
 });
 
 gulp.task('pug', () => {
+  const config = readConfig(CONFIG_PATHS.site);
   gulp.src([GLOB_PUG, GLOB_UNBUILD])
     .pipe(plumber({ errorHandler: notify.onError('<%= error.message %>') }))
     .pipe(pug({
-      locals: config.site,
+      locals: config,
       pretty: true
     }))
     .pipe(rename((path) => {
@@ -105,38 +110,42 @@ gulp.task('pug', () => {
 });
 
 gulp.task('sass', () => {
+  const config = readConfig(CONFIG_PATHS.pleeease);
   gulp.src([GLOB_SASS, GLOB_SCSS, GLOB_UNBUILD])
     .pipe(plumber({ errorHandler: notify.onError('<%= error.message %>') }))
     .pipe(sass())
-    .pipe(pleeease(config.pleeease))
+    .pipe(pleeease(config))
     .pipe(gulp.dest(DEST_CSS))
     .pipe(notify('sass build succeeded!!'));
 });
 
 gulp.task('js-copy', () => {
-  gulp.src(config.jsCopy.files)
+  const config = readConfig(CONFIG_PATHS.jsCopy);
+  gulp.src(config.files)
     .pipe(plumber({ errorHandler: notify.onError('<%= error.message %>') }))
     .pipe(gulpif(!gutil.env.develop, uglify({ preserveComments: 'some' }))) // developモードではminifyしない
     .pipe(gulp.dest(DEST_JS));
 });
 
 gulp.task('browserify', () => {
+  const config = readConfig(CONFIG_PATHS.browserify);
   browserify({
-    entries: config.browserify.entries,
+    entries: config.entries,
   })
   .transform(babelify)
   .bundle()
   .on('error', notify.onError('<%= error.message %>'))
-  .pipe(source(config.browserify.dest))
+  .pipe(source(config.dest))
   .pipe(buffer())
   .pipe(gulpif(!gutil.env.develop, uglify({ preserveComments: 'some' }))) // developモードではminifyしない
   .pipe(gulp.dest(DEST_JS));
 });
 
 gulp.task('lint', () => {
+  const config = readConfig(CONFIG_PATHS.eslintrc);
   gulp.src([GLOB_JS, GLOB_UNBUILD])
     .pipe(plumber({ errorHandler: notify.onError('<%= error.message %>') }))
-    .pipe(eslint(config.eslintrcPath))
+    .pipe(eslint(config))
     .pipe(eslint.format())
     .pipe(eslint.failAfterError());
 });
