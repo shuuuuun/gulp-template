@@ -75,6 +75,8 @@ gulp.task('watch', () => {
 });
 
 gulp.task('server', () => {
+  // TODO: DEST_PATHが存在しないとエラーになる問題
+  // TODO: FALLBACK設定
   new Koko(DEST_PATH, {
     openPath: (gutil.env.open ? '/' : null),
     staticPort: (gutil.env.port || PORT || null),
