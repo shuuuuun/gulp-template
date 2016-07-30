@@ -20,7 +20,6 @@ const GLOB_SASS = `${SRC_SASS}**/*.sass`;
 const GLOB_SCSS = `${SRC_SASS}**/*.scss`;
 const GLOB_JS = `${SRC_JS}**/*.js`;
 const GLOB_CONFIG = `${CONFIG_PATH}**/*`;
-const COMPASS_CONFIG_PATH = `${CONFIG_PATH}compass.rb`;
 
 const config = {
   site: require(`${CONFIG_PATH}site.js`),
@@ -34,7 +33,7 @@ const config = {
 // import
 import gulp from 'gulp';
 import plumber from 'gulp-plumber';
-import compass from 'gulp-compass';
+import sass from 'gulp-sass';
 import pleeease from 'gulp-pleeease';
 import pug from 'gulp-pug';
 import watch from 'gulp-watch';
@@ -56,7 +55,7 @@ import Koko from 'koko';
 gulp.task('default',['build', 'server', 'watch']);
 gulp.task('build', ['html', 'css', 'js']);
 gulp.task('html', ['pug']);
-gulp.task('css', ['compass']);
+gulp.task('css', ['sass']);
 gulp.task('js', ['lint', 'browserify', 'js-copy']);
 
 gulp.task('watch', () => {
@@ -67,7 +66,7 @@ gulp.task('watch', () => {
     gulp.start('js');
   });
   watch([GLOB_SASS, GLOB_SCSS], () => {
-    gulp.start('compass');
+    gulp.start('sass');
   });
 });
 
@@ -105,17 +104,13 @@ gulp.task('pug', () => {
     .pipe(gulp.dest(DEST_HTML));
 });
 
-gulp.task('compass', () => {
+gulp.task('sass', () => {
   gulp.src([GLOB_SASS, GLOB_SCSS, GLOB_UNBUILD])
     .pipe(plumber({ errorHandler: notify.onError('<%= error.message %>') }))
-    .pipe(compass({
-      config_file: COMPASS_CONFIG_PATH,
-      css: DEST_CSS,
-      sass: SRC_SASS,
-    }))
+    .pipe(sass())
     .pipe(pleeease(config.pleeease))
     .pipe(gulp.dest(DEST_CSS))
-    .pipe(notify('compass build succeeded!!'));
+    .pipe(notify('sass build succeeded!!'));
 });
 
 gulp.task('js-copy', () => {
