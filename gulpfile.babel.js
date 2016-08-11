@@ -20,6 +20,7 @@ const GLOB_SASS = `${SRC_SASS}**/*.sass`;
 const GLOB_SCSS = `${SRC_SASS}**/*.scss`;
 const GLOB_JS = `${SRC_JS}**/*.js`;
 const GLOB_CONFIG = `${CONFIG_PATH}**/*`;
+const GLOB_DEST = `${DEST_PATH}**/*`;
 
 const CONFIG_PATHS = {
   site: `${CONFIG_PATH}site.yml`,
@@ -27,6 +28,7 @@ const CONFIG_PATHS = {
   browserify: `${CONFIG_PATH}browserify.json`,
   pleeease: `${CONFIG_PATH}pleeease.json`,
   eslintrc: `${CONFIG_PATH}eslintrc.json`,
+  credentials: `${CONFIG_PATH}aws-credentials.json`,
 };
 
 
@@ -50,6 +52,7 @@ import notify from 'gulp-notify';
 import eslint from 'gulp-eslint';
 import Koko from 'koko';
 import readConfig from 'read-config';
+import awspublish from 'gulp-awspublish';
 
 
 // tasks
@@ -150,4 +153,15 @@ gulp.task('lint', () => {
     .pipe(eslint(config))
     .pipe(eslint.format())
     .pipe(eslint.failAfterError());
+});
+
+gulp.task('publish', () => {
+  const credentials = readConfig(CONFIG_PATHS.credentials);
+  const publisher = awspublish.create(credentials);
+  gulp.src(GLOB_DEST)
+    .pipe(publisher.publish())
+    .pipe(publisher.sync())
+    .pipe(awspublish.reporter({
+      states: ['create', 'update', 'delete']
+    }));
 });
