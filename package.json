@@ -22,7 +22,7 @@
     "babelify": "latest",
     "browserify": "latest",
     "gulp": "latest",
-    "gulp-awspublish": "^3.3.0",
+    "gulp-awspublish": "latest",
     "gulp-eslint": "latest",
     "gulp-if": "latest",
     "gulp-ignore": "latest",
