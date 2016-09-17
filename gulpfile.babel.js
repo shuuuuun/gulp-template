@@ -133,6 +133,7 @@ gulp.task('browserify', () => {
   const config = readConfig(CONFIG_PATHS.browserify);
   browserify({
     entries: config.entries,
+    paths: config.paths,
   })
   .transform(babelify)
   .bundle()
