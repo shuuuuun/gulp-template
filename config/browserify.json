@@ -1,6 +1,6 @@
 {
   "entries": [
-    "_src/js/main.js"
+    "_src/js/entry.js"
   ],
   "dest": "script.js"
 }
