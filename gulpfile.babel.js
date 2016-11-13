@@ -41,6 +41,7 @@ import uglify from 'gulp-uglify';
 import gutil from 'gulp-util';
 import rename from 'gulp-rename';
 import browserify from 'browserify';
+import watchify from 'watchify';
 import source from 'vinyl-source-stream';
 import buffer from 'vinyl-buffer';
 import babelify from 'babelify';
@@ -64,7 +65,7 @@ gulp.task('watch', () => {
     gulp.start('pug');
   });
   watch(GLOB_JS, () => {
-    gulp.start('js');
+    gulp.start(['lint', 'js-copy']);
   });
   watch([GLOB_SASS, GLOB_SCSS], () => {
     gulp.start('sass');
@@ -72,6 +73,7 @@ gulp.task('watch', () => {
   watch(GLOB_CONFIG, () => {
     gulp.start('build');
   });
+  gulp.start('watchify');
 });
 
 gulp.task('server', () => {
@@ -144,6 +146,10 @@ gulp.task('browserify', () => {
   .pipe(gulp.dest(DEST_JS));
 });
 
+gulp.task('watchify', () => {
+  bundleJs(true);
+});
+
 gulp.task('lint', () => {
   const config = readConfig(CONFIG_PATHS.eslintrc);
   gulp.src([GLOB_JS, GLOB_UNBUILD])
@@ -152,3 +158,27 @@ gulp.task('lint', () => {
     .pipe(eslint.format())
     .pipe(eslint.failAfterError());
 });
+
+function bundleJs(watching = false) {
+  const b = browserify({
+    entries: config.browserify.entries,
+    transform: [babelify],
+    plugin: watching ? [watchify] : null,
+  });
+  b.on('update', () => {
+    bundler();
+    console.log('scripts rebuild');
+  });
+  function bundler() {
+    return b.bundle()
+      .on('error', (err) => {
+        console.log(err.message);
+      })
+      .pipe(source(config.browserify.dest))
+      .pipe(buffer())
+      .pipe(gulpif(!gutil.env.develop, uglify({ preserveComments: 'some' }))) // developモードではminifyしない
+      .pipe(gulp.dest(DEST_JS));
+  }
+  return bundler();
+}
+
