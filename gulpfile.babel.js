@@ -160,8 +160,9 @@ gulp.task('lint', () => {
 });
 
 function bundleJs(watching = false) {
+  const config = readConfig(CONFIG_PATHS.browserify);
   const b = browserify({
-    entries: config.browserify.entries,
+    entries: config.entries,
     transform: [babelify],
     plugin: watching ? [watchify] : null,
   });
@@ -174,7 +175,7 @@ function bundleJs(watching = false) {
       .on('error', (err) => {
         console.log(err.message);
       })
-      .pipe(source(config.browserify.dest))
+      .pipe(source(config.dest))
       .pipe(buffer())
       .pipe(gulpif(!gutil.env.develop, uglify({ preserveComments: 'some' }))) // developモードではminifyしない
       .pipe(gulp.dest(DEST_JS));
