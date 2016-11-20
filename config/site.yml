@@ -4,7 +4,9 @@ url: 'http://localhost/'
 site_name: 'template'
 
 # meta_description: 'description'
-# meta_keywords: ['key' 'words']
+# meta_keywords:
+#   - key
+#   - words
 
 # share_image: 'http://localhost/img/ogp.png'
 
