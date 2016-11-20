@@ -27,3 +27,5 @@ is_set_twitter: false
 
 # favicon_url: 'http://localhost/favicon.ico'
 # apple_touch_icon_url: 'http://localhost/apple-touch-icon.png'
+
+# ga_tracking_code: ''
