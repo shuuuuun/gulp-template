@@ -123,6 +123,18 @@
     }
 }
 
+@mixin text-ellipsis {
+    // テキストがはみ出す部分を三点リーダー…にする（１行のみ）
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+@mixin font-smoothing {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
 @mixin prefix($prop, $value) {
     #{$prop}: $value;
     @each $prefix in webkit, moz, ms, o {
