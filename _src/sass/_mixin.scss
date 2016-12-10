@@ -1,6 +1,3 @@
-@charset "UTF-8";
-
-// mixin --------------------------------------------------
 @mixin is-sp {
   @media (max-width: $breakpoint) {
     @content;
@@ -126,8 +123,6 @@
     }
 }
 
-
-// prefix --------------------------------------------------
 @mixin prefix($prop, $value) {
     #{$prop}: $value;
     @each $prefix in webkit, moz, ms, o {
