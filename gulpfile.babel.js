@@ -34,6 +34,7 @@ const CONFIG_PATHS = {
 import gulp from 'gulp';
 import plumber from 'gulp-plumber';
 import sass from 'gulp-sass';
+import sassGlob from 'gulp-sass-glob';
 import pleeease from 'gulp-pleeease';
 import pug from 'gulp-pug';
 import watch from 'gulp-watch';
@@ -117,6 +118,7 @@ gulp.task('sass', () => {
   const config = readConfig(CONFIG_PATHS.pleeease);
   gulp.src([GLOB_SASS, GLOB_SCSS, GLOB_UNBUILD])
     .pipe(plumber({ errorHandler: notify.onError('<%= error.message %>') }))
+    .pipe(sassGlob())
     .pipe(sass())
     .pipe(pleeease(config))
     .pipe(gulp.dest(DEST_CSS))
