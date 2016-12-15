@@ -31,6 +31,7 @@
     "gulp-pug": "latest",
     "gulp-rename": "latest",
     "gulp-sass": "latest",
+    "gulp-sass-glob": "latest",
     "gulp-uglify": "latest",
     "gulp-util": "latest",
     "gulp-watch": "latest",
