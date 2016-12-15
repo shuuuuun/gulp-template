@@ -13,8 +13,7 @@
     "build": "gulp build",
     "build-html": "gulp html",
     "build-css": "gulp css",
-    "build-js": "gulp js",
-    "install": "npm install yarn && yarn install"
+    "build-js": "gulp js"
   },
   "devDependencies": {
     "babel-eslint": "latest",

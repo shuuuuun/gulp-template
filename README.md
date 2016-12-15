@@ -6,6 +6,7 @@ This is my gulp project template.
 ## install
 
 ### use yarn
+
 ```
 yarn install
 ```
@@ -19,13 +20,6 @@ or
 ```
 brew install yarn
 ```
-
-<!--
-※ yarnを使いたいけどglobalには入れたくない場合は（そんな場合はないか）
-```
-npm run install
-```
--->
 
 ### no use yarn
 
