@@ -2,10 +2,11 @@
 
 This is my gulp project template.
 
+## development
 
-## install
+### install
 
-### use yarn
+#### use yarn
 
 ```
 yarn install
@@ -21,16 +22,16 @@ or
 brew install yarn
 ```
 
-### no use yarn
+#### no use yarn
 
 ```
 npm install
 ```
 
 
-## tasks
+### tasks
 
-### start
+#### start
 
 - `npm start`
     - `gulp`でも可
@@ -40,37 +41,37 @@ npm install
     - `gulp --develop`でjs,cssをminifyしないようにできます
     - `gulp --port 0000`でportを指定できます
 
-### server
+#### server
 
 - `npm run server`
     - `gulp server`でも可
 
 - 開発用のサーバーを起動します
 
-### build
+#### build
 
 - `npm run build`
     - `gulp`でも可
 
 - html・css・jsのビルドが走ります
 
-### watch
+#### watch
 
 - `npm run watch`
     - `gulp watch`でも可
 
 - html・css・jsのソースファイルを監視し、変更があればそれぞれのビルドを実行します
 
-### 個別ビルド
+#### 個別ビルド
 
-#### html
+##### html
 - `build-html`
     - `gulp html`でも可
 
-#### css
+##### css
 - `build-css`
     - `gulp css`でも可
 
-#### js
+##### js
 - `build-js`
     - `gulp js`でも可
