@@ -31,47 +31,50 @@ npm install
 
 ### tasks
 
+gulpコマンドを利用する場合はgulpがglobalにインストールされている必要があります。
+また、バージョンにより正しく動作しない可能性があります。
+
 #### start
 
 - `npm start`
-    - `gulp`でも可
+    - or `gulp`
 
 - 現在のソースからビルドし、開発用サーバーを起動、ファイルの監視を開始します
-    - `gulp server` `gulp build` `gulp watch`と同じです
+    - `server` `build` `watch`タスクを実行します
+
+- おまけ
     - `gulp --develop`でjs,cssをminifyしないようにできます
     - `gulp --port 0000`でportを指定できます
 
 #### server
 
 - `npm run server`
-    - `gulp server`でも可
+    - or `gulp server`
 
 - 開発用のサーバーを起動します
 
 #### build
 
 - `npm run build`
-    - `gulp`でも可
+    - or `gulp build`
 
 - html・css・jsのビルドが走ります
 
 #### watch
 
 - `npm run watch`
-    - `gulp watch`でも可
+    - or `gulp watch`
 
 - html・css・jsのソースファイルを監視し、変更があればそれぞれのビルドを実行します
 
-#### 個別ビルド
+#### build html
+- `npm run build-html`
+    - or `gulp html`
 
-##### html
-- `build-html`
-    - `gulp html`でも可
+#### build css
+- `npm run build-css`
+    - or `gulp css`
 
-##### css
-- `build-css`
-    - `gulp css`でも可
-
-##### js
-- `build-js`
-    - `gulp js`でも可
+#### build js
+- `npm run build-js`
+    - or `gulp js`
