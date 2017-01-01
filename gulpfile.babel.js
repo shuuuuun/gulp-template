@@ -134,18 +134,7 @@ gulp.task('js-copy', () => {
 });
 
 gulp.task('browserify', () => {
-  const config = readConfig(CONFIG_PATHS.browserify);
-  browserify({
-    entries: config.entries,
-    paths: config.paths,
-  })
-  .transform(babelify)
-  .bundle()
-  .on('error', notify.onError('<%= error.message %>'))
-  .pipe(source(config.dest))
-  .pipe(buffer())
-  .pipe(gulpif(!gutil.env.develop, uglify({ preserveComments: 'some' }))) // developモードではminifyしない
-  .pipe(gulp.dest(DEST_JS));
+  bundleJs();
 });
 
 gulp.task('watchify', () => {
@@ -165,22 +154,22 @@ function bundleJs(watching = false) {
   const config = readConfig(CONFIG_PATHS.browserify);
   const b = browserify({
     entries: config.entries,
+    paths: config.paths,
     transform: [babelify],
     plugin: watching ? [watchify] : null,
   });
   b.on('update', () => {
+    console.log('scripts update...');
     bundler();
-    console.log('scripts rebuild');
   });
   function bundler() {
     return b.bundle()
-      .on('error', (err) => {
-        console.log(err.message);
-      })
+      .on('error', notify.onError('<%= error.message %>'))
       .pipe(source(config.dest))
       .pipe(buffer())
       .pipe(gulpif(!gutil.env.develop, uglify({ preserveComments: 'some' }))) // developモードではminifyしない
-      .pipe(gulp.dest(DEST_JS));
+      .pipe(gulp.dest(DEST_JS))
+      .pipe(notify('scripts bundle completed!'));
   }
   return bundler();
 }
