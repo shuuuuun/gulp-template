@@ -1,5 +1,29 @@
 'use strict';
 
+// import
+import gulp from 'gulp';
+import plumber from 'gulp-plumber';
+import sass from 'gulp-sass';
+import sassGlob from 'gulp-sass-glob';
+import pleeease from 'gulp-pleeease';
+import pug from 'gulp-pug';
+import watch from 'gulp-watch';
+import uglify from 'gulp-uglify';
+import gutil from 'gulp-util';
+import rename from 'gulp-rename';
+import browserify from 'browserify';
+import watchify from 'watchify';
+import source from 'vinyl-source-stream';
+import buffer from 'vinyl-buffer';
+import babelify from 'babelify';
+import gulpif from 'gulp-if';
+import gulpIgnore from 'gulp-ignore';
+import notify from 'gulp-notify';
+import eslint from 'gulp-eslint';
+import Koko from 'koko';
+import readConfig from 'read-config';
+
+
 // const
 const PORT = null;
 const FALLBACK = '404.html';
@@ -28,30 +52,6 @@ const CONFIG_PATHS = {
   pleeease: `${CONFIG_PATH}pleeease.json`,
   eslintrc: `${CONFIG_PATH}eslintrc.json`,
 };
-
-
-// import
-import gulp from 'gulp';
-import plumber from 'gulp-plumber';
-import sass from 'gulp-sass';
-import sassGlob from 'gulp-sass-glob';
-import pleeease from 'gulp-pleeease';
-import pug from 'gulp-pug';
-import watch from 'gulp-watch';
-import uglify from 'gulp-uglify';
-import gutil from 'gulp-util';
-import rename from 'gulp-rename';
-import browserify from 'browserify';
-import watchify from 'watchify';
-import source from 'vinyl-source-stream';
-import buffer from 'vinyl-buffer';
-import babelify from 'babelify';
-import gulpif from 'gulp-if';
-import gulpIgnore from 'gulp-ignore';
-import notify from 'gulp-notify';
-import eslint from 'gulp-eslint';
-import Koko from 'koko';
-import readConfig from 'read-config';
 
 
 // tasks
