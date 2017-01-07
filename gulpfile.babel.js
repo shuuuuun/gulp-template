@@ -22,10 +22,11 @@ import babelify from 'babelify';
 import watchify from 'watchify';
 import uglify from 'gulp-uglify';
 import eslint from 'gulp-eslint';
+require('dotenv').config({ silent: true });
 
 
 // const
-const PORT = null;
+const PORT = process.env.PORT || null;
 const FALLBACK = '404.html';
 
 const HTTP_PATH = './public/';
