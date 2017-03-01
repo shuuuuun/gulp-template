@@ -61,6 +61,7 @@ gulp.task('build', ['html', 'css', 'js']);
 gulp.task('html', ['pug']);
 gulp.task('css', ['sass']);
 gulp.task('js', ['lint', 'browserify', 'js-copy']);
+// TODO: lintは毎回実行しなくていいかも
 
 gulp.task('watch', () => {
   watch(GLOB_PUG, () => {
