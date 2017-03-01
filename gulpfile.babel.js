@@ -61,6 +61,7 @@ gulp.task('build', ['html', 'css', 'js']);
 gulp.task('html', ['pug']);
 gulp.task('css', ['sass']);
 gulp.task('js', ['browserify', 'js-copy']);
+// TODO: キャッシュバスター cf. https://github.com/kayac/kayac-html5-starter/pull/36
 
 gulp.task('watch', () => {
   watch(GLOB_PUG, () => {
@@ -81,6 +82,7 @@ gulp.task('watch', () => {
 gulp.task('server', () => {
   // TODO: DEST_PATHが存在しないとエラーになる問題
   // TODO: FALLBACK設定
+  // TODO: URLをecho
   new Koko(DEST_PATH, {
     openPath: (gutil.env.open ? '/' : null),
     staticPort: (gutil.env.port || PORT || null),
@@ -89,6 +91,7 @@ gulp.task('server', () => {
 
 gulp.task('pug', () => {
   const config = readConfig(CONFIG_PATHS.site);
+  // TODO: locals.basePath = BASE_PATH; cf. https://github.com/kayac/kayac-html5-starter/pull/41/files
   gulp.src([GLOB_PUG, GLOB_UNBUILD])
     .pipe(plumber({ errorHandler: notify.onError('<%= error.message %>') }))
     .pipe(pug({

@@ -1,3 +1,4 @@
+// TODO: ymlにする（jsonはほんとはコメント使えない）
 {
   "extends": "eslint:recommended",
   "parser": "babel-eslint",
