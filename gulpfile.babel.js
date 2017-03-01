@@ -60,15 +60,14 @@ gulp.task('default',['build', 'server', 'watch']);
 gulp.task('build', ['html', 'css', 'js']);
 gulp.task('html', ['pug']);
 gulp.task('css', ['sass']);
-gulp.task('js', ['lint', 'browserify', 'js-copy']);
-// TODO: lintは毎回実行しなくていいかも
+gulp.task('js', ['browserify', 'js-copy']);
 
 gulp.task('watch', () => {
   watch(GLOB_PUG, () => {
     gulp.start('pug');
   });
   watch(GLOB_JS, () => {
-    gulp.start(['lint', 'js-copy']);
+    gulp.start('js-copy');
   });
   watch([GLOB_SASS, GLOB_SCSS], () => {
     gulp.start('sass');
@@ -175,4 +174,3 @@ function bundleJs(watching = false) {
   }
   return bundler();
 }
-
