@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1.0">
+    <title>template</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <link rel="canonical" href="http://localhost/">
+    <link rel="stylesheet" href="/reveal.js/css/reveal.css">
+    <link rel="stylesheet" href="/reveal.js/css/theme/solarized.css" id="theme">
+    <link rel="stylesheet" href="/reveal.js/lib/css/zenburn.css">
+    <link rel="stylesheet" href="/css/app.css">
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="reveal">
+        <div class="slides">
+          <section data-markdown="/slides.md" data-separator="---$"></section>
+        </div>
+      </div>
+      <script src="/reveal.js/lib/js/head.min.js"></script>
+      <script src="/reveal.js/js/reveal.js"></script>
+      <script>
+        // Full list of configuration options available at:
+        // https://github.com/hakimel/reveal.js#configuration
+        Reveal.initialize({
+          controls: true,
+          progress: true,
+          history: true,
+          center: true,
+          transition: 'slide', // none/fade/slide/convex/concave/zoom
+          // Optional reveal.js plugins
+          dependencies: [
+            { src: '/reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+            { src: '/reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+            { src: '/reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+            { src: '/reveal.js/plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+            { src: '/reveal.js/plugin/zoom-js/zoom.js', async: true },
+            { src: '/reveal.js/plugin/notes/notes.js', async: true }
+          ]
+        });
+      </script>
+    </div>
+    <script src="/js/script.js"></script>
+  </body>
+</html>
