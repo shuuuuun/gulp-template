@@ -58,7 +58,7 @@ const CONFIG_PATHS = {
 
 // tasks
 gulp.task('default',['build', 'server', 'watch']);
-gulp.task('build', ['html', 'css', 'js']);
+gulp.task('build', ['copy-files', 'html', 'css', 'js']);
 gulp.task('html', ['pug']);
 gulp.task('css', ['sass']);
 gulp.task('js', ['browserify', 'js-copy']);
