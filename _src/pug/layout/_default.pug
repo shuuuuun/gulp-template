@@ -1,4 +1,4 @@
-block ConfigBlock
+block config-block
   - title = page_name ? [page_name, site_name].join(' | ') : site_name
 
 doctype html
@@ -6,14 +6,14 @@ html(lang="ja")
   head
     include ../partials/_meta
     
-    block StylesheetBlock
+    block stylesheet-block
       link(rel="stylesheet" href="./css/app.css")
     
     include ../partials/_ga
     
   body
     div.wrapper
-      block ContentBlock
+      block content-block
     
-    block JavascriptBlock
+    block javascript-block
       script(src="./js/script.js")
