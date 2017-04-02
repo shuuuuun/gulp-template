@@ -1,4 +1,16 @@
 {
   "files": [
+    "reveal.js/css/reveal.css",
+    "reveal.js/css/theme/solarized.css",
+    "reveal.js/lib/css/zenburn.css",
+    "reveal.js/lib/js/head.min.js",
+    "reveal.js/js/reveal.js",
+    "reveal.js/lib/js/classList.js",
+    "reveal.js/plugin/markdown/marked.js",
+    "reveal.js/plugin/markdown/markdown.js",
+    "reveal.js/plugin/highlight/highlight.js",
+    "reveal.js/plugin/zoom-js/zoom.js",
+    "reveal.js/plugin/notes/notes.js",
+    "reveal.js/lib/font/league-gothic/league-gothic.css"
   ]
 }
