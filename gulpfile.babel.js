@@ -52,6 +52,7 @@ const CONFIG_PATHS = {
   browserify: `${CONFIG_PATH}browserify.json`,
   pleeease: `${CONFIG_PATH}pleeease.json`,
   eslintrc: `${CONFIG_PATH}eslintrc.json`,
+  copyFiles: `${CONFIG_PATH}copy-files.json`,
 };
 
 
@@ -177,3 +178,9 @@ function bundleJs(watching = false) {
   }
   return bundler();
 }
+
+gulp.task('copy-files', () => {
+  const config = readConfig(CONFIG_PATHS.copyFiles);
+  gulp.src(config.files, { base: './' })
+    .pipe(gulp.dest(DEST_PATH));
+});
