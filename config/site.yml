@@ -12,8 +12,8 @@ site_name: 'template'
 
 is_set_ogp: false
 # og_description: 'description'
-# og_image_width: 0
-# og_image_height: 0
+# og_image_width: 1200
+# og_image_height: 630
 
 is_set_twitter: false
 # tw_description: 'description'
