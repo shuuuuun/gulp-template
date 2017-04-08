@@ -12,7 +12,6 @@ prepend StylesheetBlock
     link.href = window.location.search.match( /print-pdf/gi ) ? '/reveal.js/css/print/pdf.css' : '/reveal.js/css/print/paper.css';
     document.getElementsByTagName( 'head' )[0].appendChild( link );
 
-
 prepend ConfigBlock
   - page_name = ''
 
@@ -21,6 +20,7 @@ block ContentBlock
     div.slides
       section(data-markdown="/slides.md" data-separator="---$")
 
+prepend JavascriptBlock
   script(src="/reveal.js/lib/js/head.min.js")
   script(src="/reveal.js/js/reveal.js")
   script.
