@@ -1,27 +1,27 @@
 'use strict';
 
 // import
-import gulp from 'gulp';
-import gutil from 'gulp-util';
-import gulpif from 'gulp-if';
-import gulpIgnore from 'gulp-ignore';
-import plumber from 'gulp-plumber';
-import rename from 'gulp-rename';
-import notify from 'gulp-notify';
-import readConfig from 'read-config';
-import Koko from 'koko';
-import watch from 'gulp-watch';
-import pug from 'gulp-pug';
-import sass from 'gulp-sass';
-import sassGlob from 'gulp-sass-glob';
-import pleeease from 'gulp-pleeease';
-import source from 'vinyl-source-stream';
-import buffer from 'vinyl-buffer';
-import browserify from 'browserify';
-import babelify from 'babelify';
-import watchify from 'watchify';
-import uglify from 'gulp-uglify';
-import eslint from 'gulp-eslint';
+const gulp = require('gulp');
+const gutil = require('gulp-util');
+const gulpif = require('gulp-if');
+const gulpIgnore = require('gulp-ignore');
+const plumber = require('gulp-plumber');
+const rename = require('gulp-rename');
+const notify = require('gulp-notify');
+const readConfig = require('read-config');
+const Koko = require('koko');
+const watch = require('gulp-watch');
+const pug = require('gulp-pug');
+const sass = require('gulp-sass');
+const sassGlob = require('gulp-sass-glob');
+const pleeease = require('gulp-pleeease');
+const source = require('vinyl-source-stream');
+const buffer = require('vinyl-buffer');
+const browserify = require('browserify');
+const babelify = require('babelify');
+const watchify = require('watchify');
+const uglify = require('gulp-uglify');
+const eslint = require('gulp-eslint');
 require('dotenv').config({ silent: true });
 
 
