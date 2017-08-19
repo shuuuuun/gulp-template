@@ -133,7 +133,7 @@ gulp.task('js-copy', () => {
   const config = readConfig(CONFIG_PATHS.jsCopy);
   gulp.src(config.files)
     .pipe(plumber({ errorHandler: notify.onError('<%= error.message %>') }))
-    .pipe(gulpif(!gutil.env.develop, uglify({ preserveComments: 'some' }))) // developモードではminifyしない
+    .pipe(gulpif(!gutil.env.develop, uglify({ output: { comments: /^!/ }}))) // developモードではminifyしない
     .pipe(gulp.dest(DEST_JS));
 });
 
@@ -154,6 +154,8 @@ gulp.task('lint', () => {
     .pipe(eslint.failAfterError());
 });
 
+
+// functions
 function bundleJs(watching = false) {
   const config = readConfig(CONFIG_PATHS.browserify);
   const b = browserify({
@@ -171,7 +173,7 @@ function bundleJs(watching = false) {
       .on('error', notify.onError('<%= error.message %>'))
       .pipe(source(config.dest))
       .pipe(buffer())
-      .pipe(gulpif(!gutil.env.develop, uglify({ preserveComments: 'some' }))) // developモードではminifyしない
+      .pipe(gulpif(!gutil.env.develop, uglify({ output: { comments: /^!/ }}))) // developモードではminifyしない
       .pipe(gulp.dest(DEST_JS))
       .pipe(notify('scripts bundle completed!'));
   }
